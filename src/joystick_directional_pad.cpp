@@ -4,8 +4,10 @@ namespace romea
 {
 
 //-----------------------------------------------------------------------------
-JoystickDirectionalPad::JoystickDirectionalPad(const int & axis_id):
-  JoystickAxis(axis_id)
+JoystickDirectionalPad::JoystickDirectionalPad(const int & axis_id,
+                                               const Range & range):
+  JoystickAxe(axis_id,JoystickAxe::PAD),
+  scale_(2./(range.last-range.first))
 {
 
 }
@@ -13,7 +15,7 @@ JoystickDirectionalPad::JoystickDirectionalPad(const int & axis_id):
 //-----------------------------------------------------------------------------
 void JoystickDirectionalPad::update(const sensor_msgs::msg::Joy & joy_msg)
 {
-  value_ = joy_msg.axes[id_];
+  value_ = scale_*joy_msg.axes[id_];
 }
 
 

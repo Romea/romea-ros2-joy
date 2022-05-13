@@ -13,25 +13,32 @@ namespace romea
 {
 
 
-class JoystickMapping
+class JoystickRemapping
 {
 
 public :
 
+
   using StringToStringMap = std::map<std::string,std::string>;
   using StringToId = std::map<std::string,int>;
+  using Status = std::map<std::string,bool>;
 
 public :
 
-  JoystickMapping(const StringToStringMap & name_remappings,
-                  const bool & keep_only_remapped_ones);
+  JoystickRemapping(const StringToStringMap & name_remappings,
+                    const bool & keep_only_remapped_ones);
 
-  StringToId get(const StringToId &id_mappings) const;
+  StringToId apply(const StringToId &id_mappings)const;
+
+  const Status & get_status() const;
+
+  bool is_complete() const;
 
 private :
 
-  StringToStringMap name_remappings_;
+  StringToStringMap inverted_name_remappings_;
   bool keep_only_remapped_ones_;
+  mutable Status status_;
 };
 }
 

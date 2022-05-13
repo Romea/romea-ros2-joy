@@ -1,34 +1,40 @@
-/**:
-    ros__parameters:
-       buttons:
-         mapping:
-           A: 0
-           B: 1
-           X: 2
-           Y: 3
-           LB: 4
-           RB: 5
-           back: 6
-           start: 7
-           power: 8
-           Left_Stick_Button: 9
-           Right_Stick_Button: 10
-       axes:
-         directional_pads:
-           mapping:
-             Horizontal_Directional_Pad: 6
-             Vertical_Directional_Pad: 7
-           scale: [-1.0, 1.0]
-         sticks:
-           mapping:
-             Horizontal_Left_Stick: 0
-             Vertical_Left_Stick: 1
-             Horizontal_Right_Stick: 3
-             Vertical_Right_Stick: 4
-           scale: [-1.0, 1.0]
-         triggers:
-           mapping:
-             LT: 2
-             RT: 5
-           scale : [1.0, -1.0]
-       deadzone: 0.05
+#/**:
+#    ros__parameters:
+buttons:
+  mapping:
+    A: 0
+    B: 1
+    X: 2
+    Y: 3
+    LB: 4
+    RB: 5
+    back: 6
+    start: 7
+    power: 8
+    Left_Stick_Button: 9
+    Right_Stick_Button: 10
+  values:
+    unpressed: 0
+    pressed: 1
+axes:
+  directional_pads:
+    mapping:
+      Horizontal_Directional_Pad: 6
+      Vertical_Directional_Pad: 7
+    values:
+      range: [-1.0, 1.0] #[right left] or [down up]
+  sticks:
+    mapping:
+      Horizontal_Left_Stick: 0
+      Vertical_Left_Stick: 1
+      Horizontal_Right_Stick: 3
+      Vertical_Right_Stick: 4
+    values:
+      range: [-1.0, 1.0] #[right left] or [down up ]
+    deadzone: 0.05
+  triggers:
+    mapping:
+      LT: 2
+      RT: 5
+    values:
+      range: [1.0, -1.0] #[unpressed, pressed]

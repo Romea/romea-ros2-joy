@@ -8,8 +8,8 @@ class TestStick : public ::testing::Test
 public :
 
   TestStick():
-    stick1(0,0.05),
-    stick2(1,0.05),
+    stick1(0,0.05,{-1,1}),
+    stick2(1,0.05,{-1,1}),
     msg()
   {
 

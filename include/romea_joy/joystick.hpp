@@ -7,13 +7,15 @@
 //romea
 #include <romea_common_utils/params/node_parameters.hpp>
 #include "joystick_button.hpp"
+#include "joystick_configuration.hpp"
 #include "joystick_stick.hpp"
 #include "joystick_trigger.hpp"
 #include "joystick_directional_pad.hpp"
-#include "joystick_mapping.hpp"
+#include "joystick_remapping.hpp"
 
 //std
 #include <functional>
+
 
 namespace  romea
 {
@@ -29,12 +31,12 @@ public :
 public :
 
   Joystick(std::shared_ptr<rclcpp::Node> node,
-           const std::string & ns="");
+           const std::string & joystick_type);
 
   Joystick(std::shared_ptr<rclcpp::Node> node,
+           const std::string & joystick_type,
            const Remappings & name_remappings,
-           bool use_only_remapped,
-           const std::string & ns="");
+           bool use_only_remapped);
 
   void registerOnReceivedMsgCallback(OnReceivedMsgCallback && callback);
 
@@ -46,23 +48,20 @@ public :
 
   const double & getAxisValue(const std::string & axis_name)const;
 
-  const JoystickStick::Config & getSticksConfiguration()const;
-
-  const JoystickTrigger::Config & getTriggersConfiguration()const;
 
 private :
 
-  void addButtons_(NodeParameters & node_parameters,
-                   const JoystickMapping & joystick_mapping);
+  void addButtons_(const YAML::Node & joystick_configuration,
+                   const JoystickRemapping & joystick_remapping);
 
-  void addDirectionalPads_(NodeParameters &node_parameters,
-                           const JoystickMapping & joystick_mapping);
+  void addDirectionalPads_(const YAML::Node & joystick_configuration,
+                           const JoystickRemapping & joystick_remapping);
 
-  void addSticks_(NodeParameters &node_parameters,
-                  const JoystickMapping & joystick_mapping);
+  void addSticks_(const YAML::Node & joystick_configuration,
+                  const JoystickRemapping & joystick_remapping);
 
-  void addTriggers_(NodeParameters &node_parameters,
-                    const JoystickMapping & joystick_mapping);
+  void addTriggers_(const YAML::Node & joystick_configuration,
+                    const JoystickRemapping & joystick_remapping);
 
   void processJoyMsg_(sensor_msgs::msg::Joy::ConstSharedPtr  msg);
 
@@ -70,10 +69,10 @@ private :
 
   std::shared_ptr<rclcpp::Node> node_;
   std::shared_ptr<rclcpp::Subscription<sensor_msgs::msg::Joy>> joy_sub_;
+
   std::map<std::string,JoystickButton::Ptr> buttons_;
-  std::map<std::string,JoystickAxis::Ptr> axes_;
-  JoystickStick::Config sticks_configuration_;
-  JoystickTrigger::Config triggers_configuration_;
+  std::map<std::string,JoystickAxe::Ptr> axes_;
+
   OnReceivedMsgCallback on_received_msg_callback_;
 };
 }

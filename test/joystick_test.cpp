@@ -4,7 +4,7 @@
 #include <rclcpp/rclcpp.hpp>
 
 #include "romea_joy/joystick.hpp"
-#include "romea_joy/joystick_mapping.hpp"
+#include "romea_joy/joystick_remapping.hpp"
 
 class TestJoystick : public ::testing::Test
 {
@@ -38,24 +38,13 @@ public :
     void SetUp()
     {
 
-        rclcpp::NodeOptions no;
-        no.arguments(
-        {
-                        "--ros-args",
-                        "--params-file","/home/jeanlaneurit/dev/romea_ros2/src/interfaces/teleoperation/romea_joy/config/xbox.yaml"
-                    });
-        no.allow_undeclared_parameters(true);
-        no.automatically_declare_parameters_from_overrides(true);
-
-        node = std::make_shared<rclcpp::Node>("test_ros_params", no);
-
-        //    ros::NodeHandle nh;
-        //    ros::NodeHandle private_nh("~");
+        node = std::make_shared<rclcpp::Node>("test_joystick");
 
         std::map<std::string,std::string> remappings;
-        remappings["A"]="start";
-        remappings["B"]="stop";
-        joy=std::make_unique<romea::Joystick>(node,remappings,true);
+        remappings["start"]="A";
+        remappings["stop"]="B";
+
+        joy=std::make_unique<romea::Joystick>(node,"xbox",remappings,true);
 
         joy->registerButtonCallback("start",
                                     romea::JoystickButton::PRESSED,
@@ -129,8 +118,6 @@ TEST_F(TestJoystick, testPressedStartButton)
 //-----------------------------------------------------------------------------
 TEST_F(TestJoystick, testReleasedStopButton)
 {
-    RCLCPP_ERROR_STREAM(node->get_logger(),"testReleasedStopButton");
-
     msg.buttons[0]=0;
     msg.buttons[1]=1;
     publish_joy_msg_and_wait();
@@ -138,8 +125,6 @@ TEST_F(TestJoystick, testReleasedStopButton)
     EXPECT_EQ(stop_button_value,1);
     EXPECT_FALSE(start);
     EXPECT_FALSE(stop);
-
-    RCLCPP_ERROR_STREAM(node->get_logger(),"testReleasedStopButton");
 
     msg.buttons[1]=0;
     publish_joy_msg_and_wait();

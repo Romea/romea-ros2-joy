@@ -1,82 +1,40 @@
+//romea
 #include "romea_joy/joystick.hpp"
-#include "romea_joy/joystick_stick.hpp"
-#include "romea_joy/joystick_trigger.hpp"
-#include "romea_joy/joystick_directional_pad.hpp"
-#include "romea_joy/joystick_mapping.hpp"
 
-namespace romea
-{
-  JoystickStick::Config loadSticksConfiguration(NodeParameters & node_parameters,
-                                                const std::string & param_name)
-  {
-    std::vector<double> interval = node_parameters.loadVector<double>(param_name);
-    if(interval.size()!=2)
-    {
-      throw(std::runtime_error("Unable load sticks configuration from ros parameter " + param_name));
-    }
-    return {interval[0],interval[1]};
-  }
-
-  JoystickTrigger::Config loadTriggersConfiguration(NodeParameters & node_parameters,
-                                                    const std::string & param_name)
-  {
-    std::vector<double> interval = node_parameters.loadVector<double>(param_name);
-    if(interval.size()!=2)
-    {
-      throw(std::runtime_error("Unable load triggers configuration from ros parameter " + param_name));
-    }
-    return {interval[0],interval[1]};
-  }
-
-}
 
 namespace romea
 {
 
 //-----------------------------------------------------------------------------
 Joystick::Joystick(std::shared_ptr<rclcpp::Node> node,
-                   const std::string & ns):
+                   const std::string & joystick_type):
   Joystick(node,
+           joystick_type,
            std::map<std::string,std::string>(),
-           false,
-           ns)
+           false)
 {
 }
 
 //-----------------------------------------------------------------------------
 Joystick::Joystick(std::shared_ptr<rclcpp::Node> node,
+                   const std::string & joystick_type,
                    const Remappings & name_remappings,
-                   bool use_only_remapped,
-                   const std::string & ns):
+                   bool use_only_remapped):
   node_(node),
   joy_sub_(),
   buttons_(),
-  axes_(),
-  sticks_configuration_(),
-  triggers_configuration_()
+  axes_()
 {
-  JoystickMapping joystick_mapping(name_remappings,use_only_remapped);
+  YAML::Node joystick_configuration = load_configuration(joystick_type);
+  JoystickRemapping joystick_remapping(name_remappings,use_only_remapped);
 
-  auto node_parameters = NodeParameters(node,ns);
-  addButtons_(node_parameters,joystick_mapping);
-  addDirectionalPads_(node_parameters,joystick_mapping);
-  addSticks_(node_parameters,joystick_mapping);
-  addTriggers_(node_parameters,joystick_mapping);
+  addButtons_(joystick_configuration,joystick_remapping);
+  addDirectionalPads_(joystick_configuration,joystick_remapping);
+  addSticks_(joystick_configuration,joystick_remapping);
+  addTriggers_(joystick_configuration,joystick_remapping);
 
   auto callback = std::bind(&Joystick::processJoyMsg_,this,std::placeholders::_1);
   joy_sub_=node->create_subscription<sensor_msgs::msg::Joy>("joy", 1,callback);
-}
-
-//-----------------------------------------------------------------------------
-const JoystickStick::Config & Joystick::getSticksConfiguration()const
-{
-  return sticks_configuration_;
-}
-
-//-----------------------------------------------------------------------------
-const JoystickTrigger::Config & Joystick::getTriggersConfiguration()const
-{
-  return triggers_configuration_;
 }
 
 //-----------------------------------------------------------------------------
@@ -136,15 +94,15 @@ void Joystick::registerOnReceivedMsgCallback(OnReceivedMsgCallback && callback)
 
 
 //-----------------------------------------------------------------------------
-void Joystick::addButtons_(NodeParameters & node_parameters,
-                           const JoystickMapping & joystick_mapping)
+void Joystick::addButtons_(const YAML::Node & joystick_configuration,
+                           const JoystickRemapping & joystick_remapping)
 {
 
-  std::cout << " addButtons_ " << std::endl;
 
-  auto mapping = node_parameters.loadMap<int>("buttons.mapping");
+  YAML::Node buttons_configuration = joystick_configuration["buttons"];
 
-  for(const auto & [buttom_name, button_id] : joystick_mapping.get(mapping))
+  auto buttons_mapping = extract_mappings(buttons_configuration);
+  for(const auto & [buttom_name, button_id] : joystick_remapping.apply(buttons_mapping))
   {
     buttons_[buttom_name]=std::make_unique<JoystickButton>(button_id);
   }
@@ -152,53 +110,56 @@ void Joystick::addButtons_(NodeParameters & node_parameters,
 }
 
 //-----------------------------------------------------------------------------
-void Joystick::addDirectionalPads_(NodeParameters & node_parameters,
-                                   const JoystickMapping & joystick_mapping)
+void Joystick::addDirectionalPads_(const YAML::Node & joystick_configuration,
+                                   const JoystickRemapping & joystick_remapping)
 {
-  std::cout << " addDirectionalPads_ " << std::endl;
 
-  if(node_parameters.hasParam("axes.directional_pads"))
+  auto dpads_configuration= joystick_configuration["axes"]["directional_pads"];
+
+  if(dpads_configuration)
   {
-    std::cout << " addDirectionalPads_ " << std::endl;
-    auto mapping = node_parameters.loadMap<int>("axes.directional_pads.mapping");
-
-    for(const auto & [axe_name,axe_id] : joystick_mapping.get(mapping))
+    auto dpads_range = extract_range(dpads_configuration);
+    auto dpads_mapping = extract_mappings(dpads_configuration);
+    for(const auto & [dpad_name,dpad_id] : joystick_remapping.apply(dpads_mapping))
     {
-      axes_[axe_name]=std::make_unique<JoystickDirectionalPad>(axe_id);
+      axes_[dpad_name]=std::make_unique<JoystickDirectionalPad>(dpad_id,dpads_range);
     }
-
   }
 }
+
 //-----------------------------------------------------------------------------
-void Joystick::addSticks_(NodeParameters & node_parameters,
-                          const JoystickMapping & joystick_mapping)
+void Joystick::addSticks_(const YAML::Node & joystick_configuration,
+                          const JoystickRemapping & joystick_remapping)
+
 {
-  double deadzone = node_parameters.loadParam<double>("deadzone");
+  auto sticks_configuration = joystick_configuration["axes"]["sticks"];
 
-  sticks_configuration_=loadSticksConfiguration(node_parameters,"axes.sticks.scale");
-
-  auto mapping = node_parameters.loadMap<int>("axes.sticks.mapping");
-
-  for(const auto & [stick_name, stick_id] : joystick_mapping.get(mapping))
+  if(sticks_configuration)
   {
-    axes_[stick_name]=std::make_unique<JoystickStick>(stick_id,deadzone);
-  }
-}
-//-----------------------------------------------------------------------------
-void Joystick::addTriggers_(NodeParameters & node_parameters,
-                            const JoystickMapping & joystick_mapping)
-{
-
-  if(node_parameters.hasParam("axes.triggers"))
-  {
-
-    triggers_configuration_=loadTriggersConfiguration(node_parameters,"axes.triggers.scale");
-
-    std::map<std::string,int> mapping = node_parameters.loadMap<int>("axes.triggers.mapping");
-
-    for(const auto & [trigger_name,trigger_id] : joystick_mapping.get(mapping))
+    auto sticks_range = extract_range(sticks_configuration);
+    auto sticks_mapping = extract_mappings(sticks_configuration);
+    double deadzone = sticks_configuration["deadzone"].as<double>();
+    for(const auto & [stick_name, stick_id] : joystick_remapping.apply(sticks_mapping))
     {
-      axes_[trigger_name]=std::make_unique<JoystickTrigger>(trigger_id,triggers_configuration_.unpressed_value);
+      axes_[stick_name]=std::make_unique<JoystickStick>(stick_id,deadzone,sticks_range);
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+void Joystick::addTriggers_(const YAML::Node & joystick_configuration,
+                            const JoystickRemapping & joystick_remapping)
+{
+
+  auto triggers_configuration = joystick_configuration["axes"]["triggers"];
+
+  if(triggers_configuration)
+  {
+    auto triggers_range = extract_range(triggers_configuration);
+    auto triggers_mapping = extract_mappings(triggers_configuration);
+    for(const auto & [trigger_name,trigger_id] : joystick_remapping.apply(triggers_mapping))
+    {
+      axes_[trigger_name]=std::make_unique<JoystickTrigger>(trigger_id,triggers_range);
     }
   }
 }

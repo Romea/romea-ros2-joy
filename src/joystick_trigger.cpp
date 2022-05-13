@@ -1,21 +1,23 @@
 #include "romea_joy/joystick_trigger.hpp"
+
 namespace romea
 {
 
 //-----------------------------------------------------------------------------
 JoystickTrigger::JoystickTrigger(const int & axis_id,
-                                 const double & unpressed_value):
-  JoystickAxis(axis_id),
+                                 const Range & range):
+  JoystickAxe(axis_id,JoystickAxe::TRIGGER),
   has_been_pressed_(false),
-  unpressed_value_(unpressed_value)
+  scale_(1/(range.last-range.first)),
+  offset_(range.first)
 {
-
 }
 
 //-----------------------------------------------------------------------------
 void JoystickTrigger::update(const sensor_msgs::msg::Joy & joy_msg)
 {
-  value_ =joy_msg.axes[id_];
+  value_ = scale_*(joy_msg.axes[id_]-offset_);
+
   if(!has_been_pressed_)
   {
     if(std::abs(value_) >std::numeric_limits<double>::epsilon())
@@ -24,7 +26,7 @@ void JoystickTrigger::update(const sensor_msgs::msg::Joy & joy_msg)
     }
     else
     {
-      value_= unpressed_value_;
+      value_= 0;
     }
   }
 }

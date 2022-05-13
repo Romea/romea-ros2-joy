@@ -12,6 +12,7 @@
   <depend>rclcpp</depend>
   <depend>romea_common_utils</depend>
   <depend>sensor_msgs</depend>
+  <depend>yaml-cpp</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

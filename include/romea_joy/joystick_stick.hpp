@@ -1,25 +1,18 @@
 #ifndef _JoystickStick_HPP
 #define _JoystickStick_HPP
 
-#include "joystick_axis.hpp"
+#include "joystick_axe.hpp"
 
 namespace romea {
 
-class JoystickStick : public JoystickAxis
+class JoystickStick : public JoystickAxe
 {
-
-public:
-
-  struct Config
-  {
-    double left_or_down_value;
-    double right_or_up_value;
-  };
 
 public :
 
   JoystickStick(const int & axis_id,
-                const double & deadzone);
+                const double & deadzone,
+                const Range & range);
 
   virtual ~JoystickStick()=default;
 
