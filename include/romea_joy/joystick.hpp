@@ -51,19 +51,26 @@ public :
 
 private :
 
-  void addButtons_(const YAML::Node & joystick_configuration,
-                   const JoystickRemapping & joystick_remapping);
+  void load_devices_(const YAML::Node & joystick_configuration,
+                     const JoystickRemapping & joystick_remapping);
 
-  void addDirectionalPads_(const YAML::Node & joystick_configuration,
-                           const JoystickRemapping & joystick_remapping);
-
-  void addSticks_(const YAML::Node & joystick_configuration,
+  void load_axes_(const YAML::Node & joystick_configuration,
                   const JoystickRemapping & joystick_remapping);
 
-  void addTriggers_(const YAML::Node & joystick_configuration,
+  void load_buttons_(const YAML::Node & joystick_configuration,
+                     const JoystickRemapping & joystick_remapping);
+
+  void load_directional_pads_(const YAML::Node & axes_configuration,
+                              const JoystickRemapping & joystick_remapping);
+
+  void load_sticks_(const YAML::Node & axes_configuration,
                     const JoystickRemapping & joystick_remapping);
 
+  void load_triggers_(const YAML::Node & axes_configuration,
+                      const JoystickRemapping & joystick_remapping);
+
   void processJoyMsg_(sensor_msgs::msg::Joy::ConstSharedPtr  msg);
+
 
 private :
 

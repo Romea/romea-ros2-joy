@@ -27,11 +27,7 @@ Joystick::Joystick(std::shared_ptr<rclcpp::Node> node,
 {
   YAML::Node joystick_configuration = load_configuration(joystick_type);
   JoystickRemapping joystick_remapping(name_remappings,use_only_remapped);
-
-  addButtons_(joystick_configuration,joystick_remapping);
-  addDirectionalPads_(joystick_configuration,joystick_remapping);
-  addSticks_(joystick_configuration,joystick_remapping);
-  addTriggers_(joystick_configuration,joystick_remapping);
+  load_devices_(joystick_configuration,joystick_remapping);
 
   auto callback = std::bind(&Joystick::processJoyMsg_,this,std::placeholders::_1);
   joy_sub_=node->create_subscription<sensor_msgs::msg::Joy>("joy", 1,callback);
@@ -92,13 +88,39 @@ void Joystick::registerOnReceivedMsgCallback(OnReceivedMsgCallback && callback)
   on_received_msg_callback_=callback;
 }
 
+//-----------------------------------------------------------------------------
+void Joystick::load_devices_(const YAML::Node & joystick_configuration,
+                             const JoystickRemapping & joystick_remapping)
+{
+  load_axes_(joystick_configuration,joystick_remapping);
+  load_buttons_(joystick_configuration,joystick_remapping);
+
+  if(!joystick_remapping.is_complete())
+  {
+    std::stringstream msg;
+    msg << " Joystisck remapping cannot be completed : ";
+    for(const auto & [name, status] : joystick_remapping.get_status())
+    {
+      msg << " "<<name <<" "<< (status==true ? "assigned" : "not assigned");
+    }
+    throw std::runtime_error(msg.str());
+  }
+}
 
 //-----------------------------------------------------------------------------
-void Joystick::addButtons_(const YAML::Node & joystick_configuration,
-                           const JoystickRemapping & joystick_remapping)
+void Joystick::load_axes_(const YAML::Node & joystick_configuration,
+                          const JoystickRemapping & joystick_remapping)
 {
+  YAML::Node axes_configuration = joystick_configuration["axes"];
+  load_directional_pads_(axes_configuration,joystick_remapping);
+  load_sticks_(axes_configuration,joystick_remapping);
+  load_triggers_(axes_configuration,joystick_remapping);
+}
 
-
+//-----------------------------------------------------------------------------
+void Joystick::load_buttons_(const YAML::Node & joystick_configuration,
+                             const JoystickRemapping & joystick_remapping)
+{
   YAML::Node buttons_configuration = joystick_configuration["buttons"];
 
   auto buttons_mapping = extract_mappings(buttons_configuration);
@@ -110,11 +132,11 @@ void Joystick::addButtons_(const YAML::Node & joystick_configuration,
 }
 
 //-----------------------------------------------------------------------------
-void Joystick::addDirectionalPads_(const YAML::Node & joystick_configuration,
-                                   const JoystickRemapping & joystick_remapping)
+void Joystick::load_directional_pads_(const YAML::Node & axes_configuration,
+                                      const JoystickRemapping & joystick_remapping)
 {
 
-  auto dpads_configuration= joystick_configuration["axes"]["directional_pads"];
+  auto dpads_configuration= axes_configuration["directional_pads"];
 
   if(dpads_configuration)
   {
@@ -128,11 +150,11 @@ void Joystick::addDirectionalPads_(const YAML::Node & joystick_configuration,
 }
 
 //-----------------------------------------------------------------------------
-void Joystick::addSticks_(const YAML::Node & joystick_configuration,
-                          const JoystickRemapping & joystick_remapping)
+void Joystick::load_sticks_(const YAML::Node & axes_configuration,
+                            const JoystickRemapping & joystick_remapping)
 
 {
-  auto sticks_configuration = joystick_configuration["axes"]["sticks"];
+  auto sticks_configuration = axes_configuration["sticks"];
 
   if(sticks_configuration)
   {
@@ -147,11 +169,11 @@ void Joystick::addSticks_(const YAML::Node & joystick_configuration,
 }
 
 //-----------------------------------------------------------------------------
-void Joystick::addTriggers_(const YAML::Node & joystick_configuration,
-                            const JoystickRemapping & joystick_remapping)
+void Joystick::load_triggers_(const YAML::Node & axes_configuration,
+                              const JoystickRemapping & joystick_remapping)
 {
 
-  auto triggers_configuration = joystick_configuration["axes"]["triggers"];
+  auto triggers_configuration = axes_configuration["triggers"];
 
   if(triggers_configuration)
   {
