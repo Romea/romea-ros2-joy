@@ -35,7 +35,7 @@ public :
 
   Joystick(std::shared_ptr<rclcpp::Node> node,
            const std::string & joystick_type,
-           const Remappings & name_remappings,
+           const Remappings & remappings,
            bool use_only_remapped);
 
   void registerOnReceivedMsgCallback(OnReceivedMsgCallback && callback);
@@ -46,8 +46,9 @@ public :
 
   const int & getButtonValue(const std::string & button_name)const;
 
-  const double & getAxisValue(const std::string & axis_name)const;
+  const double & getAxeValue(const std::string & axe_name)const;
 
+  std::map<std::string, int> get_mapping()const;
 
 private :
 

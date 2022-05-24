@@ -18,7 +18,7 @@ Joystick::Joystick(std::shared_ptr<rclcpp::Node> node,
 //-----------------------------------------------------------------------------
 Joystick::Joystick(std::shared_ptr<rclcpp::Node> node,
                    const std::string & joystick_type,
-                   const Remappings & name_remappings,
+                   const Remappings & remappings,
                    bool use_only_remapped):
   node_(node),
   joy_sub_(),
@@ -26,7 +26,7 @@ Joystick::Joystick(std::shared_ptr<rclcpp::Node> node,
   axes_()
 {
   YAML::Node joystick_configuration = load_configuration(joystick_type);
-  JoystickRemapping joystick_remapping(name_remappings,use_only_remapped);
+  JoystickRemapping joystick_remapping(remappings,use_only_remapped);
   load_devices_(joystick_configuration,joystick_remapping);
 
   auto callback = std::bind(&Joystick::processJoyMsg_,this,std::placeholders::_1);
@@ -193,10 +193,27 @@ const int & Joystick::getButtonValue(const std::string & button_name)const
 }
 
 //-----------------------------------------------------------------------------
-const double & Joystick::getAxisValue(const std::string & axis_name)const
+const double & Joystick::getAxeValue(const std::string & axe_name)const
 {
-  return axes_.at(axis_name)->getValue();
+  return axes_.at(axe_name)->getValue();
 }
 
+
+//-----------------------------------------------------------------------------
+std::map<std::string, int> Joystick::get_mapping()const
+{
+  std::map<std::string, int> mapping;
+  for(const auto & [axe_id, axe] :axes_)
+  {
+    mapping[axe_id]=axe->getId();
+  }
+
+  for(const auto & [button_id, button] :buttons_)
+  {
+    mapping[button_id]=button->getId();
+  }
+
+  return mapping;
+}
 
 }

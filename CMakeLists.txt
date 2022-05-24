@@ -15,9 +15,6 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-SET(ROS_VERSION $ENV{ROS_VERSION})
-message(${ROS_VERSION})
-
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -26,7 +23,7 @@ find_package(romea_common_utils REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(yaml-cpp REQUIRED)
 
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} SHARED
       src/joystick.cpp
       src/joystick_axe.cpp
       src/joystick_button.cpp
@@ -49,13 +46,26 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>)
 
+target_link_libraries(${PROJECT_NAME} ${YAML_CPP_LIBRARIES})
 
-#ament_export_dependencies(eigen3_cmake_module)
-#ament_export_dependencies(Eigen3)
-#ament_export_libraries(${PROJECT_NAME})
+ament_export_include_directories(include)
+ament_export_dependencies(romea_core_common)
+ament_export_dependencies(romea_common_utils)
+ament_export_dependencies(sensor_msgs)
+ament_export_libraries(${PROJECT_NAME})
 #ament_export_targets(${PROJECT_NAME})
 
 #install(TARGETS ${PROJECT_NAME}_node DESTINATION lib/${PROJECT_NAME})
+
+install(
+TARGETS ${PROJECT_NAME}
+  DESTINATION lib
+)
+
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
 
 install(
   DIRECTORY config
