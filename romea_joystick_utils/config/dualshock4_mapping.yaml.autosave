@@ -1,0 +1,31 @@
+buttons:
+  Cross: 3
+  Circle: 2
+  Square: 0
+  Triangle: 1
+  L1: 4
+  L2_Button: 5
+  R1: 6
+  R2_Button: 7
+  share: 8
+  option: 9
+  PS_Button: 10
+  touchpad: 11
+  Left_Stick_Button: 12
+  Right_Stick_Button: 13
+  Left_Directional_Pad: 14
+  Up_Directional_Pad: 15
+  Right_Directional_Pad: 16
+  Down_Directional_Pad: 17
+axes:
+  sticks:
+    Horizontal_Left_Stick: 0
+    Vertical_Left_Stick: 1
+    Horizontal_Right_Stick: 2
+    Vertical_Right_Stick: 3
+  triggers:
+    L2: 4
+    R2: 5
+scale:
+  sticks: [-1.0, 1.0]
+  triggers: [0.0, 1.0]
