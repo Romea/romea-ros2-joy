@@ -4,7 +4,6 @@
 #include <rclcpp/rclcpp.hpp>
 
 #include "romea_joystick_utils/joystick.hpp"
-#include "romea_joystick_utils/joystick_remapping.hpp"
 
 class TestJoystick : public ::testing::Test
 {
@@ -38,11 +37,14 @@ public :
     {
         node = std::make_shared<rclcpp::Node>("test_joystick");
 
-        std::map<std::string, std::string> remappings;
-        remappings["start"]="A";
-        remappings["stop"]="B";
+        std::map<std::string, int> axes_remapping;
+        std::map<std::string, int> buttons_remapping;
+        buttons_remapping["start"]= 0;
+        buttons_remapping["stop"]= 1;
 
-        joy = std::make_unique<romea::Joystick>(node, "xbox", remappings, true);
+        joy = std::make_unique<romea::Joystick>(node,
+                                                axes_remapping,
+                                                buttons_remapping);
 
         joy->registerButtonCallback("start",
                                     romea::JoystickButton::PRESSED,

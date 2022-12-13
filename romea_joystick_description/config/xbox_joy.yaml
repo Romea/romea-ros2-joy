@@ -31,7 +31,6 @@ axes:
       Vertical_Right_Stick: 4
     values:
       range: [-1.0, 1.0] #[right left] or [down up ]
-    deadzone: 0.05
   triggers:
     mapping:
       LT: 2

@@ -1,15 +1,19 @@
-  #include "romea_joystick_utils/joystick_axe.hpp"
+#include "romea_joystick_utils/joystick_axe.hpp"
 
 namespace romea
 {
 
 //-----------------------------------------------------------------------------
-JoystickAxe::JoystickAxe(const int & axis_id,
-                           const Type & axis_type):
+JoystickAxe::JoystickAxe(const int & axis_id):
   id_(axis_id),
-  type_(axis_type),
   value_(0)
 {
+}
+
+//-----------------------------------------------------------------------------
+void JoystickAxe::update(const sensor_msgs::msg::Joy & joy_msg)
+{
+  value_ = joy_msg.axes[id_];
 }
 
 //-----------------------------------------------------------------------------
@@ -22,12 +26,6 @@ const double & JoystickAxe::getValue()const
 const int & JoystickAxe::getId()const
 {
   return id_;
-}
-
-//-----------------------------------------------------------------------------
-const JoystickAxe::Type & JoystickAxe::getType()const
-{
-  return type_;
 }
 
 }  // namespace romea

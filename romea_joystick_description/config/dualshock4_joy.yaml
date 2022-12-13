@@ -1,0 +1,40 @@
+   buttons:
+     mapping:
+       Cross: 0
+       Circle: 1
+       Square: 3
+       Triangle: 2
+       L1: 4
+       L2_Button: 6
+       R1: 5
+       R2_Button: 7
+       share: 8
+       option: 9
+       PS_Button: 10
+       touchpad: 11
+       Left_Stick_Button: 12
+       Right_Stick_Button: 13
+     values:
+       unpressed: 0
+       pressed: 1
+   axes:
+     directional_pads:
+      mapping:
+       Horizontal_Directional_Pad: 6
+       Vertical_Directional_Pad: 7
+      values:
+       range: [-1.0, 1.0] #[right left] or [down up]
+     sticks:
+       mapping:
+         Horizontal_Left_Stick: 0
+         Vertical_Left_Stick: 1
+         Horizontal_Right_Stick: 3 
+         Vertical_Right_Stick: 4
+       values:
+         range: [-1.0, 1.0] #[right left] or [down up]
+     triggers:
+       mapping:
+         L2: 2
+         R2: 5
+       values:
+         range: [1.0, -1.0] #[unpressed, pressed]
