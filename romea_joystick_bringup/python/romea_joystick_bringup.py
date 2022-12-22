@@ -1,24 +1,37 @@
+
+
+#!/usr/bin/env python3
+
 from ament_index_python.packages import get_package_share_directory
+from romea_common_bringup import MetaDescription
 import romea_joystick_description
 import yaml
 
-def get_joystick_name(joystick_meta_description):
-    return joystick_meta_description["name"]
 
-def get_joystick_type(joystick_meta_description):
-    return joystick_meta_description["configuration"]["type"]
+class JoystickMetaDescription:
+    def __init__(self, meta_description_filename):
+        self.meta_description = MetaDescription("joystick", meta_description_filename)
 
-def has_joystick_driver_configuration(joystick_meta_description):
-    return "driver" in joystick_meta_description
+    def get_name(self):
+        return self.meta_description.get("name")
 
-def get_joystick_driver_pkg(joystick_meta_description):
-    return joystick_meta_description["driver"]["pkg"]
+    def has_driver_configuration(self):
+        return self.meta_description.exists("driver")
 
-def get_joystick_device(joystick_meta_description):
-    return joystick_meta_description["driver"]["device"]
+    def get_driver_pkg(self):
+        return self.meta_description.get("pkg", "driver")
 
-def get_joystick_autorepeat_rate(joystick_meta_description):
-    return joystick_meta_description["driver"]["autorepeat_rate"]
+    def get_driver_device(self):
+        return self.meta_description.get("device", "driver")
 
-def get_joystick_dead_zone(joystick_meta_description):
-    return joystick_meta_description["driver"]["deadzone"]
+    def get_driver_autorepeat_rate(self):
+        return self.meta_description.get("autorepeat_rate", "driver")
+
+    def get_driver_dead_zone(self):
+        return self.meta_description.get("deadzone", "driver")
+
+    def get_type(self):
+        return self.meta_description.get("type", "configuration")
+
+    # def get_model(self):
+    #     return self.meta_description.get("model", "configuration")
