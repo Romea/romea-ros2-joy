@@ -1,11 +1,14 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 #include "romea_joystick_utils/joystick_axe.hpp"
 
 namespace romea
 {
 
 //-----------------------------------------------------------------------------
-JoystickAxe::JoystickAxe(const int & axis_id):
-  id_(axis_id),
+JoystickAxe::JoystickAxe(const int & axis_id)
+: id_(axis_id),
   value_(0)
 {
 }

@@ -1,11 +1,7 @@
+# Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+# Add license
 
-
-#!/usr/bin/env python3
-
-from ament_index_python.packages import get_package_share_directory
 from romea_common_bringup import MetaDescription
-import romea_joystick_description
-import yaml
 
 
 class JoystickMetaDescription:

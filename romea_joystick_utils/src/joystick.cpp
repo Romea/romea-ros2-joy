@@ -1,4 +1,13 @@
-// romea
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
+// std
+#include <map>
+#include <memory>
+#include <string>
+#include <utility>
+
+// local
 #include "romea_joystick_utils/joystick.hpp"
 
 

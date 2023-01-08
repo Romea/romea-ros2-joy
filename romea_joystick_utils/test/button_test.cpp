@@ -1,14 +1,17 @@
+// Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+// Add license
+
 // gtest
 #include <gtest/gtest.h>
 
+// local
 #include "romea_joystick_utils/joystick_button.hpp"
 
 class TestButton : public ::testing::Test
 {
-public :
-
-  TestButton():
-    button(0),
+public:
+  TestButton()
+  : button(0),
     msg(),
     pressed_counter(0),
     released_counter(0),
@@ -18,7 +21,7 @@ public :
 
   void pressed_callback()
   {
-     pressed_counter++;
+    pressed_counter++;
   }
 
   void released_callback()
@@ -37,14 +40,17 @@ public :
     msg.axes.resize(8);
     msg.buttons.resize(11);
 
-    button.registerCallback(romea::JoystickButton::PRESSED,
-                            std::bind(&TestButton::pressed_callback, this));
+    button.registerCallback(
+      romea::JoystickButton::PRESSED,
+      std::bind(&TestButton::pressed_callback, this));
 
-    button.registerCallback(romea::JoystickButton::RELEASED,
-                            std::bind(&TestButton::released_callback, this));
+    button.registerCallback(
+      romea::JoystickButton::RELEASED,
+      std::bind(&TestButton::released_callback, this));
 
-    button.registerCallback(romea::JoystickButton::TOGGLED,
-                            std::bind(&TestButton::toggled_callback, this));
+    button.registerCallback(
+      romea::JoystickButton::TOGGLED,
+      std::bind(&TestButton::toggled_callback, this));
   }
 
   romea::JoystickButton button;
@@ -89,7 +95,8 @@ TEST_F(TestButton, testReleased)
 }
 
 //-----------------------------------------------------------------------------
-int main(int argc, char **argv){
+int main(int argc, char ** argv)
+{
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
-
+# Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+# Add license
 
 import yaml
 from ament_index_python.packages import get_package_share_directory

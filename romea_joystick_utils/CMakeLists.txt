@@ -26,15 +26,13 @@ find_package(yaml-cpp REQUIRED)
 add_library(${PROJECT_NAME} SHARED
       src/joystick.cpp
       src/joystick_axe.cpp
-      src/joystick_button.cpp
-    )
+      src/joystick_button.cpp)
 
 ament_target_dependencies(${PROJECT_NAME}
     rclcpp
     romea_core_common
     romea_common_utils
-    sensor_msgs
-    )
+    sensor_msgs)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -69,9 +67,10 @@ install(
 
 if(BUILD_TESTING)
 
-    find_package(ament_lint_auto REQUIRED)
-    ament_lint_auto_find_test_dependencies()
-    add_subdirectory(test)
+  find_package(ament_lint_auto REQUIRED)
+  list(APPEND AMENT_LINT_AUTO_EXCLUDE ament_cmake_copyright)
+  ament_lint_auto_find_test_dependencies()
+  add_subdirectory(test)
 
 endif()
 
