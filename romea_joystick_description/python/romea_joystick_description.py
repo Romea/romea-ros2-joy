@@ -42,14 +42,31 @@ def joystick_remapping(joystick_type, joystick_driver, user_joystick_remapping):
     joystick_remapping["axes"] = {}
 
     joystick_configuration = get_joystick_configuration(joystick_type, joystick_driver)
-    buttons_mapping = get_joystick_buttons_mapping(joystick_configuration)
-    for user_buttons_remapping in user_joystick_remapping["buttons"].items():
-        id = buttons_mapping[user_buttons_remapping[1]]
-        joystick_remapping["buttons"][user_buttons_remapping[0]] = id
 
-    axes_mapping = get_joystick_axes_mapping(joystick_configuration)
-    for user_axes_remapping in user_joystick_remapping["axes"].items():
-        id = axes_mapping[user_axes_remapping[1]]
-        joystick_remapping["axes"][user_axes_remapping[0]] = id
+    try:
+        buttons_mapping = get_joystick_buttons_mapping(joystick_configuration)
+        for user_buttons_remapping in user_joystick_remapping["buttons"].items():
+            id = buttons_mapping[user_buttons_remapping[1]]
+            joystick_remapping["buttons"][user_buttons_remapping[0]] = id
+    except Exception:
+        raise LookupError(
+            "Cannot define remapping for button "
+            + user_buttons_remapping[1]
+            + " because this button is not defined in configuration file :"
+            + get_joystick_configuration_filename(joystick_type, joystick_driver)
+        )
+
+    try:
+        axes_mapping = get_joystick_axes_mapping(joystick_configuration)
+        for user_axes_remapping in user_joystick_remapping["axes"].items():
+            id = axes_mapping[user_axes_remapping[1]]
+            joystick_remapping["axes"][user_axes_remapping[0]] = id
+    except Exception:
+        raise LookupError(
+            "Cannot define remapping for axe "
+            + user_axes_remapping[1]
+            + " because this axe is not defined in configuration file :"
+            + get_joystick_configuration_filename(joystick_type, joystick_driver)
+        )
 
     return joystick_remapping

@@ -4,9 +4,8 @@
 
   <name>romea_joystick_description</name>
   <version>0.0.0</version>
-  <description>Package with URDF and description files of remote controller.</description>
+  <description>Package with configuration files of remote controller.</description>
 
-  <author email="jean.laneurit@inrae.fr">Jean Laneurit</author>
   <maintainer email="jean.laneurit@inrae.fr">Jean Laneurit</maintainer>
 
   <license>TODO</license>

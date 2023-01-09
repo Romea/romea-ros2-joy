@@ -26,5 +26,5 @@ galactic_focal_build:
   script:
     - colcon build 
     - source install/setup.bash 
-    - colcon test --packages-select romea_joystick_utils romea_joystick_bringup
+    - colcon test --packages-select romea_joystick_utils romea_joystick_bringup romea_joystick_description
     - colcon test-result --verbose
