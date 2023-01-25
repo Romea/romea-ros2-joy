@@ -4,12 +4,13 @@
 #ifndef ROMEA_JOYSTICK_UTILS__JOYSTICK_BUTTON_HPP_
 #define ROMEA_JOYSTICK_UTILS__JOYSTICK_BUTTON_HPP_
 
-// ros
-#include <sensor_msgs/msg/joy.hpp>
-
 // std
 #include <functional>
 #include <memory>
+
+// ros
+#include "sensor_msgs/msg/joy.hpp"
+
 
 namespace romea
 {

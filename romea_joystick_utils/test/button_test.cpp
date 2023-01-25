@@ -2,7 +2,7 @@
 // Add license
 
 // gtest
-#include <gtest/gtest.h>
+#include "gtest/gtest.h"
 
 // local
 #include "romea_joystick_utils/joystick_button.hpp"
