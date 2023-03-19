@@ -21,7 +21,6 @@ find_package(rclcpp REQUIRED)
 find_package(romea_core_common REQUIRED)
 find_package(romea_common_utils REQUIRED)
 find_package(sensor_msgs REQUIRED)
-find_package(yaml-cpp REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
       src/joystick.cpp
