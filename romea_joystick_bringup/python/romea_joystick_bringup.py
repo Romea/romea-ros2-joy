@@ -5,8 +5,8 @@ from romea_common_bringup import MetaDescription
 
 
 class JoystickMetaDescription:
-    def __init__(self, meta_description_filename):
-        self.meta_description = MetaDescription("joystick", meta_description_filename)
+    def __init__(self, meta_description_file_path):
+        self.meta_description = MetaDescription("joystick", meta_description_file_path)
 
     def get_name(self):
         return self.meta_description.get("name")

@@ -22,11 +22,11 @@ def get_robot_namespace(context):
 
 def get_meta_description(context):
 
-    meta_description_yaml_filename = LaunchConfiguration(
-        "meta_description_filename"
+    meta_description_file_path = LaunchConfiguration(
+        "meta_description_file_path"
     ).perform(context)
 
-    return JoystickMetaDescription(meta_description_yaml_filename)
+    return JoystickMetaDescription(meta_description_file_path)
 
 
 def launch_setup(context, *args, **kwargs):
@@ -71,7 +71,7 @@ def launch_setup(context, *args, **kwargs):
 def generate_launch_description():
 
     declared_arguments = []
-    declared_arguments.append(DeclareLaunchArgument("meta_description_filename"))
+    declared_arguments.append(DeclareLaunchArgument("meta_description_file_path"))
 
     declared_arguments.append(
         DeclareLaunchArgument("robot_namespace", default_value="")
