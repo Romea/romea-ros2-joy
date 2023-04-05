@@ -24,7 +24,7 @@ The romea_joy_bringup package provides  :
 
 # 2) Joystick meta-description #
 
-As seen below GPS meta-description file is a yaml file constituted by six items. The first item is the name of sensor defined by user. The second one is the configuration of ROS2 driver used to control GPS receiver (see section 4 for more explanations). The third item is the configuration of ROS2 driver used to deal with NTRIP communication in order to broadcast differential corrections to GPS receiver (see section 5 for more explanations). The fourth item provides basics specifications of the GPS receiver and the fifth item specifies where the GPS receiver antenna is located on the robot, these informations will be used to create URDF description and by user to configure its algorithms.  Finally, the last item gives the topics to be recorded into the ROS bag during experiments or simulation. Thanks to remappings written into launch files, GPS topics are always the same names for each drivers or simulator plugins.       
+As seen below joystick meta-description file is a yaml file constituted by four items. The first item is the name of joystick defined by user. The second one is the configuration of ROS2 driver used to control joystick (see section 4 for more explanations). The third item provides basics specifications of the joystick (ytpe, model). Finally, the last item gives the topics to be recorded into the ROS bag during experiments or simulation. Thanks to remappings written into launch files, joy topics are always the same for each drivers.       
 
 Example :
 ```yaml
@@ -40,7 +40,7 @@ Example :
     joy: true # joy topic will be recorded into bag
 ```
 
-# 4) Supported joystick models
+# 3) Supported joystick models
 
 Supported joystick model are listed in the following table :
 
@@ -51,7 +51,7 @@ Supported joystick model are listed in the following table :
 
 You can find specifications of each joystick in config directory of romea_joy_description package.
 
-# 5) Supported GPS joystick ROS2 drivers
+# 4) Supported joystick ROS2 drivers
 
 Supported drivers are [joy](https://github.com/ros-drivers/joystick_drivers) and  [ds4_driver](https://github.com/naoki-mizuno/ds4_driver). In order to used one of them, you can specify driver item in joystick meta-description file like this:
 

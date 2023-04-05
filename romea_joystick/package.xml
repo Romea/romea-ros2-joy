@@ -5,7 +5,6 @@
   <version>0.0.0</version>
   <description>Romea joystick metapackage</description>
 
-  <author>Jean Laneurit</author>
   <maintainer email="jean.laneurit@inrae.fr">Jean Laneurit</maintainer>
 
   <license>BSD</license>
