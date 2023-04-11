@@ -15,14 +15,10 @@ def launch_setup(context, *args, **kwargs):
 
     driver = LaunchDescription()
 
-    print(autorepeat_rate)
-    print(type(autorepeat_rate))
-
     driver_node = Node(
         package="joy",
         executable="joy_node",
         name="driver",
-        output="screen",
         parameters=[
             {"dev": device},
             {"autorepeat_rate": float(autorepeat_rate)},
@@ -30,6 +26,10 @@ def launch_setup(context, *args, **kwargs):
             {"default_trig_val": True},
         ],
         arguments=[],
+        output={
+            'stdout': 'log',
+            'stderr': 'log',
+        }
     )
 
     driver.add_action(driver_node)
