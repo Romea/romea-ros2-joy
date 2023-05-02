@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-
 from romea_joystick_description import (
     get_joystick_configuration,
     get_joystick_buttons_mapping,
