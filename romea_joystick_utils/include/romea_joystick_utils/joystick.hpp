@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #ifndef ROMEA_JOYSTICK_UTILS__JOYSTICK_HPP_
 #define ROMEA_JOYSTICK_UTILS__JOYSTICK_HPP_
 

@@ -13,15 +13,13 @@
 # limitations under the License.
 
 
-
 import os
 import pytest
 
 from romea_joystick_bringup import JoystickMetaDescription
 
 
-
-pytest.fixture(scope="module")
+@pytest.fixture(scope="module")
 def meta_description():
     meta_description_file_path = os.path.join(os.getcwd(), "test_joystick_bringup.yaml")
     return JoystickMetaDescription(meta_description_file_path)
