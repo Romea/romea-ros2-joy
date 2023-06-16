@@ -4,8 +4,10 @@
   <name>romea_joystick_utils</name>
   <version>0.0.0</version>
   <description>Package romea_joystick_utils </description>
-  <maintainer email="jean.laneurit@inrae.fr">ros2004</maintainer>
-  <license>TODO: License declaration</license>
+
+  <maintainer email="jean.laneurit@inrae.fr" />
+
+  <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 

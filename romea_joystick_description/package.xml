@@ -4,11 +4,12 @@
 
   <name>romea_joystick_description</name>
   <version>0.0.0</version>
-  <description>Package with configuration files of remote controller.</description>
+  <description>Package containing configuration files and utilies for different kind of remote
+    controller.</description>
 
   <maintainer email="jean.laneurit@inrae.fr">Jean Laneurit</maintainer>
 
-  <license>TODO</license>
+  <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
