@@ -78,7 +78,7 @@ def generate_launch_description():
 
     declared_arguments = []
 
-    declared_arguments.append(DeclareLaunchArgument("mode"))
+    declared_arguments.append(DeclareLaunchArgument("mode", default_value="live"))
 
     declared_arguments.append(
         DeclareLaunchArgument("robot_namespace", default_value="")
