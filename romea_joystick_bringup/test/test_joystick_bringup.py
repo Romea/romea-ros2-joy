@@ -51,3 +51,8 @@ def test_get_driver_dead_zone(meta_description):
 
 def test_get_type(meta_description):
     assert meta_description.get_type() == "xbox"
+
+
+def test_get_records(meta_description):
+    records = meta_description.get_records()
+    assert records["joy"] is True

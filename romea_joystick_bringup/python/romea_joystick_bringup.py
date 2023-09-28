@@ -24,6 +24,9 @@ class JoystickMetaDescription:
     def get_name(self):
         return self.meta_description.get("name")
 
+    def get_namespace(self):
+        return self.meta_description.get_or("namespace", None)
+
     def has_driver_configuration(self):
         return self.meta_description.exists("driver")
 
@@ -44,6 +47,12 @@ class JoystickMetaDescription:
 
     # def get_model(self):
     #     return self.meta_description.get("model", "configuration")
+
+    def get_records(self):
+        return self.meta_description.get_or("records", None, {})
+
+    def get_bridge(self):
+        return self.meta_description.get_or("bridge", None, {})
 
 
 def load_meta_description(meta_description_file_path):
