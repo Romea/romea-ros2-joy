@@ -34,6 +34,8 @@
 
 namespace  romea
 {
+namespace  ros2
+{
 
 class Joystick
 {
@@ -80,6 +82,7 @@ private:
   OnReceivedMsgCallback on_received_msg_callback_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_JOYSTICK_UTILS__JOYSTICK_HPP_

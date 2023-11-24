@@ -24,6 +24,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 Joystick::Joystick(
@@ -139,4 +141,5 @@ std::map<std::string, int> Joystick::get_mapping()const
   return mapping;
 }
 
+}  // namespace ros2
 }  // namespace romea

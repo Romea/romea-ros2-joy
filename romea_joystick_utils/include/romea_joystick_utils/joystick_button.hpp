@@ -25,6 +25,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class JoystickButton
 {
@@ -60,6 +62,7 @@ private:
   CallbackFunction toggled_callback_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_JOYSTICK_UTILS__JOYSTICK_BUTTON_HPP_

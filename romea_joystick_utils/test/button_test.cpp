@@ -52,19 +52,19 @@ public:
     msg.buttons.resize(11);
 
     button.registerCallback(
-      romea::JoystickButton::PRESSED,
+      romea::ros2::JoystickButton::PRESSED,
       std::bind(&TestButton::pressed_callback, this));
 
     button.registerCallback(
-      romea::JoystickButton::RELEASED,
+      romea::ros2::JoystickButton::RELEASED,
       std::bind(&TestButton::released_callback, this));
 
     button.registerCallback(
-      romea::JoystickButton::TOGGLED,
+      romea::ros2::JoystickButton::TOGGLED,
       std::bind(&TestButton::toggled_callback, this));
   }
 
-  romea::JoystickButton button;
+  romea::ros2::JoystickButton button;
   sensor_msgs::msg::Joy msg;
   int pressed_counter;
   int released_counter;

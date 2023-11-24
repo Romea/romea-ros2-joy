@@ -16,6 +16,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 JoystickAxe::JoystickAxe(const int & axis_id)
@@ -42,4 +44,5 @@ const int & JoystickAxe::getId()const
   return id_;
 }
 
+}  // namespace ros2
 }  // namespace romea

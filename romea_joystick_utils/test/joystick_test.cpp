@@ -61,19 +61,19 @@ public:
     buttons_remapping["start"] = 0;
     buttons_remapping["stop"] = 1;
 
-    joy = std::make_unique<romea::Joystick>(
+    joy = std::make_unique<romea::ros2::Joystick>(
       node,
       axes_remapping,
       buttons_remapping);
 
     joy->registerButtonCallback(
       "start",
-      romea::JoystickButton::PRESSED,
+      romea::ros2::JoystickButton::PRESSED,
       std::bind(&TestJoystick::start_callback, this));
 
     joy->registerButtonCallback(
       "stop",
-      romea::JoystickButton::RELEASED,
+      romea::ros2::JoystickButton::RELEASED,
       std::bind(&TestJoystick::stop_callback, this));
 
     joy->registerOnReceivedMsgCallback(
@@ -92,7 +92,7 @@ public:
     rclcpp::spin_some(node);
   }
 
-  void joystick_callback(const romea::Joystick & joy)
+  void joystick_callback(const romea::ros2::Joystick & joy)
   {
     start_button_value = joy.getButtonValue("start");
     stop_button_value = joy.getButtonValue("stop");
@@ -109,7 +109,7 @@ public:
   }
 
   std::shared_ptr<rclcpp::Node> node;
-  std::unique_ptr<romea::Joystick> joy;
+  std::unique_ptr<romea::ros2::Joystick> joy;
   sensor_msgs::msg::Joy msg;
   std::shared_ptr<rclcpp::Publisher<sensor_msgs::msg::Joy>> pub;
   bool start;

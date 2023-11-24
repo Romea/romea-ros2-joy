@@ -20,6 +20,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 //-----------------------------------------------------------------------------
 JoystickButton::JoystickButton(const int & button_id)
@@ -82,4 +84,5 @@ const int & JoystickButton::getId()const
   return id_;
 }
 
+}  // namespace ros2
 }  // namespace romea

@@ -27,6 +27,8 @@
 
 namespace romea
 {
+namespace ros2
+{
 
 class JoystickAxe
 {
@@ -47,6 +49,7 @@ protected:
   double value_;
 };
 
+}  // namespace ros2
 }  // namespace romea
 
 #endif  // ROMEA_JOYSTICK_UTILS__JOYSTICK_AXE_HPP_
