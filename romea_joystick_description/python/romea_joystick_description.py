@@ -82,3 +82,25 @@ def joystick_remapping(joystick_type, joystick_driver, user_joystick_remapping):
         )
 
     return joystick_remapping
+
+
+def joystick_buttons_remapping(joystick_type, joystick_driver, user_buttons_remapping):
+
+    buttons_remapping = {}
+
+    joystick_configuration = get_joystick_configuration(joystick_type, joystick_driver)
+
+    try:
+        buttons_mapping = get_joystick_buttons_mapping(joystick_configuration)
+        for user_buttons_remapping in user_buttons_remapping.items():
+            id = buttons_mapping[user_buttons_remapping[1]]
+            buttons_remapping[user_buttons_remapping[0]] = id
+    except Exception:
+        raise LookupError(
+            "Cannot define remapping for button "
+            + user_buttons_remapping[1]
+            + " because this button is not defined in configuration file :"
+            + get_joystick_configuration_filename(joystick_type, joystick_driver)
+        )
+
+    return buttons_remapping

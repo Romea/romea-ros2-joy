@@ -17,6 +17,7 @@ from romea_joystick_description import (
     get_joystick_buttons_mapping,
     get_joystick_axes_mapping,
     joystick_remapping,
+    joystick_buttons_remapping,
 )
 
 
@@ -34,7 +35,7 @@ def test_get_axes_mapping():
     assert mapping["LT"] == 2
 
 
-def test_remapping():
+def test_joystick_remapping():
 
     user_remapping = {}
     user_remapping["axes"] = {}
@@ -44,3 +45,13 @@ def test_remapping():
     remapping = joystick_remapping("dualshock4", "ds4_driver", user_remapping)
     assert remapping["axes"]["foo"] == 0
     assert remapping["buttons"]["bar"] == 3
+
+
+def test_joystick_buttons_remapping():
+
+    user_remapping = {}
+    user_remapping["start"] = "Cross"
+    user_remapping["stop"] = "Circle"
+    remapping = joystick_buttons_remapping("dualshock4", "ds4_driver", user_remapping)
+    assert remapping["start"] == 3
+    assert remapping["stop"] == 2
