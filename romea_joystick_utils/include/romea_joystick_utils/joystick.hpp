@@ -24,6 +24,8 @@
 
 // ros
 #include "rclcpp/node.hpp"
+#include "rclcpp_lifecycle/lifecycle_node.hpp"
+#include "sensor_msgs/msg/joy.hpp"
 
 // romea ros
 #include "romea_common_utils/params/node_parameters.hpp"
@@ -44,11 +46,16 @@ public:
   using Remappings = std::map<std::string, std::string>;
 
 public:
+  template<typename Node>
   Joystick(
-    std::shared_ptr<rclcpp::Node> node,
-    const std::map<std::string, int> & axes_mapping,
+    std::shared_ptr<Node> node,
     const std::map<std::string, int> & buttons_mapping);
 
+  template<typename Node>
+  Joystick(
+    std::shared_ptr<Node> node,
+    const std::map<std::string, int> & axes_mapping,
+    const std::map<std::string, int> & buttons_mapping);
 
   void registerOnReceivedMsgCallback(OnReceivedMsgCallback && callback);
 
@@ -64,7 +71,8 @@ public:
   std::map<std::string, int> get_mapping()const;
 
 private:
-  void init_joy_sub_(std::shared_ptr<rclcpp::Node> node);
+  template<typename Node>
+  void init_joy_sub_(std::shared_ptr<Node> node);
 
   void init_axes(const std::map<std::string, int> & axes_mapping);
 
@@ -73,7 +81,7 @@ private:
   void processJoyMsg_(sensor_msgs::msg::Joy::ConstSharedPtr msg);
 
 private:
-  std::shared_ptr<rclcpp::Node> node_;
+  std::shared_ptr<rclcpp::Logger> logger_;
   std::shared_ptr<rclcpp::Subscription<sensor_msgs::msg::Joy>> joy_sub_;
 
   std::map<std::string, JoystickAxe::Ptr> axes_;

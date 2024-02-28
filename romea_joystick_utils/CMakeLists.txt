@@ -18,6 +18,7 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
 find_package(romea_core_common REQUIRED)
 find_package(romea_common_utils REQUIRED)
 find_package(sensor_msgs REQUIRED)
@@ -29,6 +30,7 @@ add_library(${PROJECT_NAME} SHARED
 
 ament_target_dependencies(${PROJECT_NAME}
     rclcpp
+    rclcpp_lifecycle
     romea_core_common
     romea_common_utils
     sensor_msgs)

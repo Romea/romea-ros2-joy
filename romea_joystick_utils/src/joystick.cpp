@@ -28,12 +28,57 @@ namespace ros2
 {
 
 //-----------------------------------------------------------------------------
-Joystick::Joystick(
+template<>
+void Joystick::init_joy_sub_<rclcpp::Node>(std::shared_ptr<rclcpp::Node> node)
+{
+  auto callback = std::bind(&Joystick::processJoyMsg_, this, std::placeholders::_1);
+  joy_sub_ = node->create_subscription<sensor_msgs::msg::Joy>("joystick/joy", 1, callback);
+}
+
+//-----------------------------------------------------------------------------
+template<>
+void Joystick::init_joy_sub_<rclcpp_lifecycle::LifecycleNode>(
+  std::shared_ptr<rclcpp_lifecycle::LifecycleNode> node)
+{
+  auto callback = std::bind(&Joystick::processJoyMsg_, this, std::placeholders::_1);
+  joy_sub_ = node->create_subscription<sensor_msgs::msg::Joy>("joystick/joy", 1, callback);
+}
+
+//-----------------------------------------------------------------------------
+template<>
+Joystick::Joystick<rclcpp::Node>(
+  std::shared_ptr<rclcpp::Node> node,
+  const std::map<std::string, int> & buttons_mapping)
+: joy_sub_(),
+  axes_(),
+  buttons_(),
+  on_received_msg_callback_()
+{
+  init_buttons(buttons_mapping);
+  init_joy_sub_(node);
+}
+
+//-----------------------------------------------------------------------------
+template<>
+Joystick::Joystick<rclcpp_lifecycle::LifecycleNode>(
+  std::shared_ptr<rclcpp_lifecycle::LifecycleNode> node,
+  const std::map<std::string, int> & buttons_mapping)
+: joy_sub_(),
+  axes_(),
+  buttons_(),
+  on_received_msg_callback_()
+{
+  init_buttons(buttons_mapping);
+  init_joy_sub_(node);
+}
+
+//-----------------------------------------------------------------------------
+template<>
+Joystick::Joystick<rclcpp::Node>(
   std::shared_ptr<rclcpp::Node> node,
   const std::map<std::string, int> & axes_mapping,
   const std::map<std::string, int> & buttons_mapping)
-: node_(node),
-  joy_sub_(),
+: joy_sub_(),
   axes_(),
   buttons_(),
   on_received_msg_callback_()
@@ -44,11 +89,21 @@ Joystick::Joystick(
 }
 
 //-----------------------------------------------------------------------------
-void Joystick::init_joy_sub_(std::shared_ptr<rclcpp::Node> node)
+template<>
+Joystick::Joystick<rclcpp_lifecycle::LifecycleNode>(
+  std::shared_ptr<rclcpp_lifecycle::LifecycleNode> node,
+  const std::map<std::string, int> & axes_mapping,
+  const std::map<std::string, int> & buttons_mapping)
+: joy_sub_(),
+  axes_(),
+  buttons_(),
+  on_received_msg_callback_()
 {
-  auto callback = std::bind(&Joystick::processJoyMsg_, this, std::placeholders::_1);
-  joy_sub_ = node->create_subscription<sensor_msgs::msg::Joy>("joystick/joy", 1, callback);
+  init_axes(axes_mapping);
+  init_buttons(buttons_mapping);
+  init_joy_sub_(node);
 }
+
 
 //-----------------------------------------------------------------------------
 void Joystick::init_axes(const std::map<std::string, int> & axes_mapping)
@@ -70,9 +125,9 @@ void Joystick::init_buttons(const std::map<std::string, int> & buttons_mapping)
 void Joystick::processJoyMsg_(sensor_msgs::msg::Joy::ConstSharedPtr msg)
 {
   if (msg->axes.empty() || msg->buttons.empty()) {
-    RCLCPP_ERROR_STREAM(
-      node_->get_logger(),
-      "Unavailable joy msg : check if joy node is connected to a proper device");
+    // RCLCPP_ERROR_STREAM(
+    //   node_->get_logger(),
+    //   "Unavailable joy msg : check if joy node is connected to a proper device");
   } else {
     for (auto & p : buttons_) {
       p.second->update(*msg);
