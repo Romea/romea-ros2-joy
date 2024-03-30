@@ -1,0 +1,17 @@
+buttons:
+  mapping:
+    Panel_Button_1: 0
+    Panel_Button_2: 1
+    Panel_Button_3: 2
+    Panel_Button_4: 3
+    Panel_Button_5: 4
+    Panel_Button_6: 5
+    Deadman_7: 6
+    Top_Button: 7
+axes:
+  sticks:
+    mapping:
+      Rear_Front_Stick: 0
+      Left_Right_Stick: 1
+    scale: [-1.0, 1.0]
+deadzone: 0.05
