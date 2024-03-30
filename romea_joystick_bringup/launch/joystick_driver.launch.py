@@ -66,7 +66,7 @@ def launch_setup(context, *args, **kwargs):
                     [
                         FindPackageShare("romea_joystick_bringup"),
                         "launch",
-                        "drivers/" + meta_description.get_driver_pkg() + ".launch.py",
+                        "drivers/" + meta_description.get_driver_package() + ".launch.py",
                     ]
                 )
             ]
