@@ -15,6 +15,10 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from romea_common_bringup import device_link_name
 from romea_joystick_bringup import JoystickMetaDescription
 
+import tempfile
+import yaml
+import os
+
 
 def get_mode(context):
     return LaunchConfiguration("mode").perform(context)
@@ -33,6 +37,14 @@ def get_meta_description(context):
     return JoystickMetaDescription(meta_description_file_path)
 
 
+def generate_yaml_temp_file(prefix: str, data: dict):
+    fd, filepath = tempfile.mkstemp(prefix=prefix + '_', suffix='.yaml')
+    with os.fdopen(fd, 'w') as file:
+        file.write(yaml.safe_dump(data))
+
+    return filepath
+
+
 def launch_setup(context, *args, **kwargs):
 
     mode = get_mode(context)
@@ -43,6 +55,9 @@ def launch_setup(context, *args, **kwargs):
         return []
 
     joystick_name = meta_description.get_name()
+
+    parameters = meta_description.get_driver_parameters()
+    config_path = generate_yaml_temp_file('joystick_driver', parameters)
 
     driver = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -57,9 +72,8 @@ def launch_setup(context, *args, **kwargs):
             ]
         ),
         launch_arguments={
-            "device": meta_description.get_driver_device(),
-            "autorepeat_rate": str(meta_description.get_driver_autorepeat_rate()),
-            "dead_zone": str(meta_description.get_driver_dead_zone()),
+            "config_path": config_path,
+            "executable": meta_description.get_driver_executable(),
             "frame_id": device_link_name(robot_namespace, joystick_name),
         }.items(),
     )

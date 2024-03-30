@@ -33,20 +33,19 @@ def test_has_driver_configuration(meta_description):
     assert meta_description.has_driver_configuration() is True
 
 
-def test_get_driver_pkg(meta_description):
-    assert meta_description.get_driver_pkg() == "joy"
+def test_get_driver_package(meta_description):
+    assert meta_description.get_driver_package() == "joy"
 
 
-def test_get_driver_device(meta_description):
-    assert meta_description.get_driver_device() == "/dev/input/js0"
+def test_get_driver_executable(meta_description):
+    assert meta_description.get_driver_executable() == "joy_node"
 
 
-def test_get_driver_auto_repeat_rate(meta_description):
-    assert meta_description.get_driver_autorepeat_rate() == 10.0
-
-
-def test_get_driver_dead_zone(meta_description):
-    assert meta_description.get_driver_dead_zone() == 0.1
+def test_get_driver_parameters(meta_description):
+    parameters = meta_description.get_driver_parameters()
+    assert parameters["device_name"] == "/dev/input/js0"
+    assert parameters["autorepeat_rate"] == 10
+    assert parameters["deadzone"] == 0.1
 
 
 def test_get_type(meta_description):
