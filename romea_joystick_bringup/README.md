@@ -28,12 +28,13 @@ As seen below joystick meta-description file is a yaml file constituted by four 
 
 Example :
 ```yaml
-  name: "joystick" #name of the joystick
+  name: joystick #name of the joystick
   driver: #joystick driver configuration
-    pkg: "joy"  # ros2 driver package choiced by user and its parameters 
-    device: "/dev/input/js0"
-    autorepeat_rate: 10
-    deadzone: 0.1
+    package: joy  # ros2 driver package 
+    executable: joy_node  # ros2 node launch
+    parameters: # parameters of driver node
+      autorepeat_rate: 10.0
+      deadzone: 0.1
   configuration: # joystick basic specifications
     type: xbox #  joystick type
   records:
@@ -58,22 +59,23 @@ Supported drivers are [joy](https://github.com/ros-drivers/joystick_drivers) and
 - joy driver:
 
 ```yaml
-  pkg: "joy"  # ROS2 package name  
-    device:  "/dev/input/js0"  # input device
-    baudrate: 115200 # serial baudrate
-    autorepeat_rate: 10
+  package: joy  # ROS2 package name
+  executable: joy_node # node to be launched
+  parameters: # parameters of driver node
+    autorepeat_rate: 10.0
     deadzone: 0.1
 ```
 
 * ds4_driver driver:
 
 ```yaml
-  pkg: "ds4_driver"  # ROS2  package name  
+  package: ds4_driver  # ROS2  package name
+  executable: ds4_driver_node  # node to be launched
     device:  "/dev/input/js0"  # input device
     autorepeat_rate: 10
     deadzone: 0.1
 ```
 
-For each driver a python launch file with the name of the ROS2 package is provided in launch directory. When the meta-description is red by the main launch file called gps_driver.launch.py the corresponding driver is automatically launched taking into account parameters define by user. Thanks to remapping defined inside each driver launch files, the data provided by drivers are always pubkish in same topic called:
+For each driver a python launch file with the name of the ROS2 package is provided in launch directory. When the meta-description is red by the main launch file called joystick_driver.launch.py the corresponding driver is automatically launched taking into account parameters define by user. Thanks to remapping defined inside each driver launch files, the data provided by drivers are always pubkish in same topic called:
 
 - joy(sensor_msgs/Joy)
