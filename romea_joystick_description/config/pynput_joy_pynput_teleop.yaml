@@ -1,0 +1,13 @@
+buttons:
+  mapping:
+    key_w: 0
+    key_x: 1
+axes:
+  sticks:
+    mapping:
+      linear: 0
+      angular: 1
+      fake: 2
+      angular_rear: 3
+    scale: [-1.0, 1.0]
+deadzone: 0.05
