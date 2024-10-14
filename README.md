@@ -1,4 +1,4 @@
-# ROMEA Joystick GPS Stack
+# ROMEA Joystick Stack
 
 This stack contains several ROS2 packages for working with remote joysticks, both in real-world applications and simulations. For more detailed information, please refer to the README files of each individual package.
 
