@@ -64,8 +64,7 @@ def generate_launch_description():
 
     declared_arguments = [
         DeclareLaunchArgument("executable"),
-        DeclareLaunchArgument("config_path"),
-        DeclareLaunchArgument("frame_id"),
+        DeclareLaunchArgument("config_path")
     ]
 
     # declared_arguments.append(DeclareLaunchArgument("device"))

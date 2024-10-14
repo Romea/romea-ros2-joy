@@ -73,8 +73,7 @@ def launch_setup(context, *args, **kwargs):
         ),
         launch_arguments={
             "config_path": config_path,
-            "executable": meta_description.get_driver_executable(),
-            "frame_id": device_link_name(robot_namespace, joystick_name),
+            "executable": meta_description.get_driver_executable()
         }.items(),
     )
 
@@ -92,13 +91,15 @@ def generate_launch_description():
 
     declared_arguments = []
 
-    declared_arguments.append(DeclareLaunchArgument("mode", default_value="live"))
+    declared_arguments.append(
+        DeclareLaunchArgument("mode", default_value="live"))
 
     declared_arguments.append(
         DeclareLaunchArgument("robot_namespace", default_value="")
     )
 
-    declared_arguments.append(DeclareLaunchArgument("meta_description_file_path"))
+    declared_arguments.append(
+        DeclareLaunchArgument("meta_description_file_path"))
 
     return LaunchDescription(
         declared_arguments + [OpaqueFunction(function=launch_setup)]
