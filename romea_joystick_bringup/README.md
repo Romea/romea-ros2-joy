@@ -24,7 +24,7 @@ The romea_joy_bringup package provides  :
 
 # 2) Joystick meta-description #
 
-As seen below joystick meta-description file is a yaml file constituted by four items. The first item is the name of joystick defined by user. The second one is the configuration of ROS2 driver used to control joystick (see section 4 for more explanations). The third item provides basics specifications of the joystick (ytpe, model). Finally, the last item gives the topics to be recorded into the ROS bag during experiments or simulation. Thanks to remappings written into launch files, joy topics are always the same for each drivers.       
+As seen below joystick meta-description file is a yaml file constituted by four items. The first item is the name of joystick defined by user. The second one is the configuration of ROS2 driver used to control joystick (see section 4 for more explanations). The third item provides basics specifications of the joystick (type, model). Finally, the last item gives the topics to be recorded into the ROS bag during experiments or simulation. Thanks to remappings written into launch files, joy topics are always the same for each drivers.       
 
 Example :
 ```yaml
@@ -76,6 +76,6 @@ Supported drivers are [joy](https://github.com/ros-drivers/joystick_drivers) and
     deadzone: 0.1
 ```
 
-For each driver a python launch file with the name of the ROS2 package is provided in launch directory. When the meta-description is red by the main launch file called joystick_driver.launch.py the corresponding driver is automatically launched taking into account parameters define by user. Thanks to remapping defined inside each driver launch files, the data provided by drivers are always pubkish in same topic called:
+For each driver a python launch file with the name of the ROS2 package is provided in launch directory. When the meta-description is read by the main launch file called joystick_driver.launch.py the corresponding driver is automatically launched taking into account parameters define by user. Thanks to remapping defined inside each driver launch files, the data provided by drivers are always publish in same topic called:
 
 - joy(sensor_msgs/Joy)

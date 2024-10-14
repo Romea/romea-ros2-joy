@@ -1,3 +1,5 @@
+# ROMEA Joystick Description #
+
 # 1 Overview #
 
 This package contains :
@@ -6,7 +8,7 @@ This package contains :
 
 # 2 Joystick configuration
 
-In ROS, data provided by a joystick (see [sensors_msgs/Joy.msg](https://docs.ros2.org/foxy/api/sensor_msgs/msg/Joy.html)) are split in two vectors : data coming from buttons and data coming from axes (sticks,triggers and sometimes directional pads). The organization of the data storage and their ranges are different depending on the joystick model and the driver used. So for each combination of joystick model and driver a configuration file is provided in the config directory containing the data mapping and their ranges, see the example below. This information will be used to configure the teleoperation nodes and all the high level algorithms driven the joystick. Actually, two joystick models (xbox dualshock4) and two driver types (joy,ds4_driver) are supported, others will be added later.
+In ROS, joystick data (see [sensors_msgs/Joy.msg](https://docs.ros2.org/foxy/api/sensor_msgs/msg/Joy.html)) is split in two vectors : one for buttons and one for axes (including sticks, triggers, and occasionally directional pads). The data storage and their ranges are different depending on the joystick model and driver used. A configuration file is provided for each model/driver combination in the config directory containing the data mapping and their ranges, see the example below. This information will be used to configure the teleoperation nodes and all the high level algorithms driven the joystick. Currently, two joystick models (xbox dualshock4) and two driver types (joy,ds4_driver) are supported, others will be added in the future.
 
 ```yaml
 buttons: # buttons configuration
