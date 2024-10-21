@@ -1,4 +1,4 @@
-# ROMEA Joystick Stack
+# ROMEA ROS2 Joystick
 
 This stack contains several ROS2 packages for working with remote joysticks, both in real-world applications and simulations. For more detailed information, please refer to the README files of each individual package.
 
@@ -9,9 +9,7 @@ This stack contains several ROS2 packages for working with remote joysticks, bot
 3. mkdir src
 4. wget https://raw.githubusercontent.com/Romea/romea-ros2-joy/refs/heads/main/romea_joy_public.repos
 5. vcs import src < romea_joy_public.repos
-6. build packages
-   - catkin build for ROS1
-   - colcon build for ROS2
+6. colcon build
 7. see bringup package to launch josytick 
 
 ## **Contributing**
