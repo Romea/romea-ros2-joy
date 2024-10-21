@@ -31,8 +31,8 @@ This project is released under the Apache License 2.0. See the LICENSE file for 
 
 ## **Authors**
 
-The ROMEA ROS2 Joystick project was developed by **Jean Laneurit** in the context of various research projects carried out at INRAE.
+The romea_ros2_joystick project was developed by **Jean Laneurit** in the context of various research projects carried out at INRAE.
 
 ## **Contact**
 
-If you have any questions or comments about ROMEA ROS2 Jostick stack, please contact **[Jean Laneurit](mailto:jean.laneurit@inrae.fr)** 
+If you have any questions or comments about romea_ros2_joystick project, please contact **[Jean Laneurit](mailto:jean.laneurit@inrae.fr)** 
