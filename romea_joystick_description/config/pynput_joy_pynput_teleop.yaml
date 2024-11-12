@@ -2,6 +2,10 @@ buttons:
   mapping:
     key_w: 0
     key_x: 1
+    key_a: 2
+    key_z: 3
+    key_q: 4
+    key_s: 5
 axes:
   sticks:
     mapping:
