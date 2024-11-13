@@ -14,4 +14,3 @@ axes:
       fake: 2
       angular_rear: 3
     scale: [-1.0, 1.0]
-deadzone: 0.05
