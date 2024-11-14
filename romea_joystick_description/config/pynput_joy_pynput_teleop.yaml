@@ -9,8 +9,8 @@ buttons:
 axes:
   sticks:
     mapping:
-      linear: 0
-      angular: 1
-      fake: 2
-      angular_rear: 3
+      up_down: 0
+      left_right: 1
+      up_down_inverse: 2
+      left_right_inverse: 3
     scale: [-1.0, 1.0]
