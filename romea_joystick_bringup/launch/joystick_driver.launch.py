@@ -12,7 +12,6 @@ from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 from launch_ros.substitutions import FindPackageShare
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
-from romea_common_bringup import device_link_name
 from romea_joystick_bringup import JoystickMetaDescription
 
 import tempfile
@@ -90,15 +89,11 @@ def generate_launch_description():
 
     declared_arguments = []
 
-    declared_arguments.append(
-        DeclareLaunchArgument("mode", default_value="live"))
+    declared_arguments.append(DeclareLaunchArgument("mode", default_value="live"))
 
-    declared_arguments.append(
-        DeclareLaunchArgument("robot_namespace", default_value="")
-    )
+    declared_arguments.append(DeclareLaunchArgument("robot_namespace", default_value=""))
 
-    declared_arguments.append(
-        DeclareLaunchArgument("meta_description_file_path"))
+    declared_arguments.append(DeclareLaunchArgument("meta_description_file_path"))
 
     return LaunchDescription(
         declared_arguments + [OpaqueFunction(function=launch_setup)]
