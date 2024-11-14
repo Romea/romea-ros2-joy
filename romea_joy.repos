@@ -8,7 +8,11 @@ repositories:
     type: git
     url: git@gitlab-ssh.irstea.fr:romea_ros2/tools/romea_common.git
     version: devel
-  romea_ros2/interface/romea_joy:
+  romea_ros2/interfaces/teleoperation/romea_joy:
     type: git
     url: git@gitlab-ssh.irstea.fr:romea_ros2/interfaces/teleoperation/romea_joy.git
     version: devel
+  romea_ros2/interfaces/teleoperation/pynput_teleop:
+    type: git
+    url: git@forgemia.inra.fr:tscf/ros2/pynput_teleop.git
+    version: main
