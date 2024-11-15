@@ -7,7 +7,7 @@ from launch.actions import (
     GroupAction,
 )
 
-from launch_ros.actions import SetParameter, PushRosNamespace
+from launch_ros.actions import PushRosNamespace
 from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 from launch_ros.substitutions import FindPackageShare
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -17,10 +17,6 @@ from romea_joystick_bringup import JoystickMetaDescription
 import tempfile
 import yaml
 import os
-
-
-def get_mode(context):
-    return LaunchConfiguration("mode").perform(context)
 
 
 def get_robot_namespace(context):
@@ -45,8 +41,6 @@ def generate_yaml_temp_file(prefix: str, data: dict):
 
 
 def launch_setup(context, *args, **kwargs):
-
-    mode = get_mode(context)
     robot_namespace = get_robot_namespace(context)
     meta_description = get_meta_description(context)
 
