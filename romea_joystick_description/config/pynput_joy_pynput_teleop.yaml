@@ -7,10 +7,11 @@ buttons:
     key_q: 4
     key_s: 5
 axes:
-  sticks:
+  arrows:
     mapping:
       up_down: 0
       left_right: 1
       up_down_inverse: 2
       left_right_inverse: 3
+      page_up_down: 4
     scale: [-1.0, 1.0]
