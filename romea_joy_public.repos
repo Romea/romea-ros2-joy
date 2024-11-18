@@ -8,7 +8,11 @@ repositories:
     type: git
     url: https://github.com/Romea/romea-ros2-common.git
     version: main
-  romea_ros2/interface/romea_joy:
+  romea_ros2/interfaces/teleoperation/romea_joy:
     type: git
     url: https://github.com/Romea/romea-ros2-joy.git
     version: main
+  # romea_ros2/interfaces/teleoperation/pynput_teleop:
+  #   type: git
+  #   url: https://forgemia.inra.fr/tscf/ros2/pynput_teleop.git
+  #   version: main

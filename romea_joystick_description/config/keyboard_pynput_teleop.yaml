@@ -1,0 +1,17 @@
+buttons:
+  mapping:
+    key_w: 0
+    key_x: 1
+    key_a: 2
+    key_z: 3
+    key_q: 4
+    key_s: 5
+axes:
+  arrows:
+    mapping:
+      up_down: 0
+      left_right: 1
+      up_down_inverse: 2
+      left_right_inverse: 3
+      page_up_down: 4
+    scale: [-1.0, 1.0]

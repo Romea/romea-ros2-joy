@@ -7,21 +7,16 @@ from launch.actions import (
     GroupAction,
 )
 
-from launch_ros.actions import SetParameter, PushRosNamespace
+from launch_ros.actions import PushRosNamespace
 from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 from launch_ros.substitutions import FindPackageShare
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
-from romea_common_bringup import device_link_name
 from romea_joystick_bringup import JoystickMetaDescription
 
 import tempfile
 import yaml
 import os
-
-
-def get_mode(context):
-    return LaunchConfiguration("mode").perform(context)
 
 
 def get_robot_namespace(context):
@@ -46,8 +41,6 @@ def generate_yaml_temp_file(prefix: str, data: dict):
 
 
 def launch_setup(context, *args, **kwargs):
-
-    mode = get_mode(context)
     robot_namespace = get_robot_namespace(context)
     meta_description = get_meta_description(context)
 
@@ -73,13 +66,11 @@ def launch_setup(context, *args, **kwargs):
         ),
         launch_arguments={
             "config_path": config_path,
-            "executable": meta_description.get_driver_executable(),
-            "frame_id": device_link_name(robot_namespace, joystick_name),
+            "executable": meta_description.get_driver_executable()
         }.items(),
     )
 
     actions = [
-        SetParameter(name="use_sim_time", value=(mode != "live")),
         PushRosNamespace(robot_namespace),
         PushRosNamespace(joystick_name),
         driver,
@@ -94,9 +85,7 @@ def generate_launch_description():
 
     declared_arguments.append(DeclareLaunchArgument("mode", default_value="live"))
 
-    declared_arguments.append(
-        DeclareLaunchArgument("robot_namespace", default_value="")
-    )
+    declared_arguments.append(DeclareLaunchArgument("robot_namespace", default_value=""))
 
     declared_arguments.append(DeclareLaunchArgument("meta_description_file_path"))
 

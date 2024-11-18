@@ -1,4 +1,4 @@
-# Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+# Copyright 2024 INRAE, French National Research Institute for Agriculture, Food and Environment
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,15 +26,6 @@ def launch_setup(context, *args, **kwargs):
     executable = LaunchConfiguration("executable").perform(context)
     config_path = LaunchConfiguration("config_path").perform(context)
 
-    # device = LaunchConfiguration("device").perform(context)
-    # dead_zone = LaunchConfiguration("dead_zone").perform(context)
-    # autorepeat_rate = LaunchConfiguration("autorepeat_rate").perform(context)
-    # parameters=[
-    #     # {"device_name": device},
-    #     {"autorepeat_rate": float(autorepeat_rate)},
-    #     {"deadzone": float(dead_zone)},
-    # ],
-
     driver = LaunchDescription()
 
     print(f'config_path: {config_path}')
@@ -42,7 +33,7 @@ def launch_setup(context, *args, **kwargs):
         config_parameters = yaml.safe_load(file)
 
     driver_node = Node(
-        package="joy",
+        package="pynput_teleop",
         executable=executable,
         name="driver",
         parameters=[config_parameters],
@@ -66,15 +57,6 @@ def generate_launch_description():
         DeclareLaunchArgument("executable"),
         DeclareLaunchArgument("config_path")
     ]
-
-    # declared_arguments.append(DeclareLaunchArgument("device"))
-
-    # # just to be compatible
-    # declared_arguments.append(DeclareLaunchArgument("frame_id"))
-
-    # declared_arguments.append(DeclareLaunchArgument("autorepeat_rate"))
-
-    # declared_arguments.append(DeclareLaunchArgument("dead_zone"))
 
     return LaunchDescription(
         declared_arguments + [OpaqueFunction(function=launch_setup)]
