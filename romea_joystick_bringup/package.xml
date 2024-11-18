@@ -17,6 +17,7 @@
   <depend>romea_common_bringup</depend>
 
   <exec_depend>joy</exec_depend>
+  <exec_depend>joy_linux</exec_depend>
   <!-- TODO uncomment pynput when released in ros2 -->
   <!-- <exec_depend>pynput_teleop</exec_depend> -->
 
