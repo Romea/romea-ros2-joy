@@ -16,12 +16,12 @@
 import os
 import pytest
 
-from romea_joystick_bringup import JoystickMetaDescription
+from romea_joystick_meta_bringup import JoystickMetaDescription
 
 
 @pytest.fixture(scope="module")
 def meta_description():
-    meta_description_file_path = os.path.join(os.getcwd(), "test_joystick_bringup.yaml")
+    meta_description_file_path = os.path.join(os.getcwd(), "test_joystick_meta_bringup.yaml")
     return JoystickMetaDescription(meta_description_file_path)
 
 

@@ -24,18 +24,20 @@ import yaml
 def launch_setup(context, *args, **kwargs):
 
     executable = LaunchConfiguration("executable").perform(context)
-    config_path = LaunchConfiguration("config_path").perform(context)
+    executable_namespace = LaunchConfiguration("executable_namespace").perform(context)
+    configuration_file_path = LaunchConfiguration("configuration_file_path").perform(context)
 
     driver = LaunchDescription()
 
-    print(f'config_path: {config_path}')
-    with open(config_path, 'r') as file:
+    print(f'config_path: {configuration_file_path}')
+    with open(configuration_file_path, 'r') as file:
         config_parameters = yaml.safe_load(file)
 
     driver_node = Node(
         package="pynput_teleop",
         executable=executable,
         name="driver",
+        namespace=executable_namespace,
         parameters=[config_parameters],
         arguments=[],
         output={
@@ -51,11 +53,12 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
 
-    declared_arguments = []
-
     declared_arguments = [
         DeclareLaunchArgument("executable"),
-        DeclareLaunchArgument("config_path")
+        DeclareLaunchArgument("executable_namespace"),
+        DeclareLaunchArgument("configuration_file_path"),
+        DeclareLaunchArgument("component_container", default_value=""),
+        DeclareLaunchArgument("frame_id")
     ]
 
     return LaunchDescription(

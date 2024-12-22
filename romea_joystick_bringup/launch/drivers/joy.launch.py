@@ -24,27 +24,20 @@ import yaml
 def launch_setup(context, *args, **kwargs):
 
     executable = LaunchConfiguration("executable").perform(context)
-    config_path = LaunchConfiguration("config_path").perform(context)
-
-    # device = LaunchConfiguration("device").perform(context)
-    # dead_zone = LaunchConfiguration("dead_zone").perform(context)
-    # autorepeat_rate = LaunchConfiguration("autorepeat_rate").perform(context)
-    # parameters=[
-    #     # {"device_name": device},
-    #     {"autorepeat_rate": float(autorepeat_rate)},
-    #     {"deadzone": float(dead_zone)},
-    # ],
+    executable_namespace = LaunchConfiguration("executable_namespace").perform(context)
+    configuration_file_path = LaunchConfiguration("configuration_file_path").perform(context)
 
     driver = LaunchDescription()
 
-    print(f'config_path: {config_path}')
-    with open(config_path, 'r') as file:
+    print(f'config_path: {configuration_file_path}')
+    with open(configuration_file_path, 'r') as file:
         config_parameters = yaml.safe_load(file)
 
     driver_node = Node(
         package="joy",
         executable=executable,
         name="driver",
+        namespace=executable_namespace,
         parameters=[config_parameters],
         arguments=[],
         output={
@@ -60,21 +53,13 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
 
-    declared_arguments = []
-
     declared_arguments = [
         DeclareLaunchArgument("executable"),
-        DeclareLaunchArgument("config_path")
+        DeclareLaunchArgument("executable_namespace"),
+        DeclareLaunchArgument("configuration_file_path"),
+        DeclareLaunchArgument("component_container", default_value=""),
+        DeclareLaunchArgument("frame_id")
     ]
-
-    # declared_arguments.append(DeclareLaunchArgument("device"))
-
-    # # just to be compatible
-    # declared_arguments.append(DeclareLaunchArgument("frame_id"))
-
-    # declared_arguments.append(DeclareLaunchArgument("autorepeat_rate"))
-
-    # declared_arguments.append(DeclareLaunchArgument("dead_zone"))
 
     return LaunchDescription(
         declared_arguments + [OpaqueFunction(function=launch_setup)]
