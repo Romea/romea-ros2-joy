@@ -23,13 +23,13 @@ from romea_joystick_utils import (
 
 
 def test_get_buttons_mapping():
-    joystick_msg_layout = get_joystick_msg_layout("sony_dualshock4_joy")
+    joystick_msg_layout = get_joystick_msg_layout("sony_dualshock4")
     mapping = get_joystick_buttons_mapping(joystick_msg_layout)
     assert mapping["Cross"] == 0
 
 
 def test_get_axes_mapping():
-    joystick_msg_layout = get_joystick_msg_layout("microsoft_xbox_joy")
+    joystick_msg_layout = get_joystick_msg_layout("microsoft_xbox")
     mapping = get_joystick_axes_mapping(joystick_msg_layout)
     assert mapping["Horizontal_Left_Stick"] == 0
     assert mapping["Horizontal_Directional_Pad"] == 6
