@@ -60,6 +60,14 @@ install(
   DESTINATION include
 )
 
+install(
+  DIRECTORY config
+  DESTINATION share/${PROJECT_NAME}
+)
+
+ament_python_install_module(python/romea_joystick_utils.py)
+
+
 if(BUILD_TESTING)
 
   find_package(ament_lint_auto REQUIRED)
