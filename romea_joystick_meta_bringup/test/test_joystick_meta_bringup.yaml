@@ -1,12 +1,13 @@
 name: "joystick"
-driver:
-  package: "joy"
-  executable: "joy_node"
-  parameters:
-    device_name: "/dev/input/js0"
-    autorepeat_rate: 10
-    deadzone: 0.1
+launch:
+  - include:
+      file: "$(find-pkg-share romea_joystic_meta_bringup)/profile/joy.launch.py"
+      arg:
+        - name: device
+          value: /dev/input/js0
 configuration:
-  type: xbox
+  manufacturer: microsoft
+  model: xbox
+  rate: 10
 records:
   joy: true

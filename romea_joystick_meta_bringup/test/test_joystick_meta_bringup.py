@@ -25,31 +25,28 @@ def meta_description():
     return JoystickMetaDescription(meta_description_file_path)
 
 
+def test_get_rate(meta_description):
+    assert meta_description.get_rate() == 10
+
+
+def test_get_msg_layout(meta_description):
+    assert meta_description.get_msg_layout() == "microsoft_xbox"
+
+
 def test_get_name(meta_description):
     assert meta_description.get_name() == "joystick"
 
 
-def test_has_driver_configuration(meta_description):
-    assert meta_description.has_driver_configuration() is True
+def test_get_launch_file(meta_description):
+    assert meta_description.get_launch_file() is not None
 
 
-def test_get_driver_package(meta_description):
-    assert meta_description.get_driver_package() == "joy"
-
-
-def test_get_driver_executable(meta_description):
-    assert meta_description.get_driver_executable() == "joy_node"
-
-
-def test_get_driver_parameters(meta_description):
-    parameters = meta_description.get_driver_parameters()
-    assert parameters["device_name"] == "/dev/input/js0"
-    assert parameters["autorepeat_rate"] == 10
-    assert parameters["deadzone"] == 0.1
+def test_get_manufacturer(meta_description):
+    assert meta_description.get_manufacturer() == "microsoft"
 
 
 def test_get_type(meta_description):
-    assert meta_description.get_type() == "xbox"
+    assert meta_description.get_model() == "xbox"
 
 
 def test_get_records(meta_description):

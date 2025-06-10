@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+# Copyright 2022 INRAE, French National Research Institute for Agriculture, Food and Environment
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import sys
+import yaml
+from romea_joystick_meta_bringup import JoystickMetaDescription, generate_joystick_mapping_file
+
+if __name__ == "__main__":
+
+    argv = sys.argv
+
+    parameters = {}
+    for argument in argv[1:]:
+        name, value = argument.split(":")
+        parameters[name] = value
+
+    meta_description_file_path = parameters["meta_description_file_path"]
+    teleop_remapping_file_path = parameters["teleop_remapping_file_path"]
+    meta_description = JoystickMetaDescription(meta_description_file_path)
+
+    with open(teleop_remapping_file_path, 'r') as f:
+        print(generate_joystick_mapping_file(meta_description, yaml.safe_load(f)))
