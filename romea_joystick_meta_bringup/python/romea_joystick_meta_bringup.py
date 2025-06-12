@@ -34,7 +34,7 @@ def load_meta_description(meta_description_file_path):
     return JoystickMetaDescription(meta_description_file_path)
 
 
-def get_joystick_msg_layout(meta_description):
+def get_joystick_complete_configuration(meta_description):
     return romea_joystick_utils.get_joystick_msg_layout(meta_description.get_msg_layout())
 
 
