@@ -14,7 +14,7 @@
 
 
 from romea_joystick_utils import (
-    get_joystick_msg_layout,
+    get_joystick_configuration,
     get_joystick_buttons_mapping,
     get_joystick_axes_mapping,
     apply_joystick_remapping,
@@ -23,14 +23,14 @@ from romea_joystick_utils import (
 
 
 def test_get_buttons_mapping():
-    joystick_msg_layout = get_joystick_msg_layout("sony_dualshock4")
-    mapping = get_joystick_buttons_mapping(joystick_msg_layout)
+    joystick_configuration = get_joystick_configuration("sony_dualshock4")
+    mapping = get_joystick_buttons_mapping(joystick_configuration)
     assert mapping["Cross"] == 0
 
 
 def test_get_axes_mapping():
-    joystick_msg_layout = get_joystick_msg_layout("microsoft_xbox")
-    mapping = get_joystick_axes_mapping(joystick_msg_layout)
+    joystick_configuration = get_joystick_configuration("microsoft_xbox")
+    mapping = get_joystick_axes_mapping(joystick_configuration)
     assert mapping["Horizontal_Left_Stick"] == 0
     assert mapping["Horizontal_Directional_Pad"] == 6
     assert mapping["LT"] == 2
@@ -43,8 +43,8 @@ def test_joystick_remapping():
     user_remapping["buttons"] = {}
     user_remapping["axes"]["foo"] = "Horizontal_Left_Stick"
     user_remapping["buttons"]["bar"] = "Cross"
-    joystick_msg_layout = get_joystick_msg_layout("sony_dualshock4_ds4_driver")
-    remapping = apply_joystick_remapping(joystick_msg_layout, user_remapping)
+    joystick_configuration = get_joystick_configuration("sony_dualshock4_ds4_driver")
+    remapping = apply_joystick_remapping(joystick_configuration, user_remapping)
     assert remapping["axes"]["foo"] == 0
     assert remapping["buttons"]["bar"] == 3
 
@@ -54,7 +54,7 @@ def test_joystick_buttons_remapping():
     user_remapping = {}
     user_remapping["start"] = "Cross"
     user_remapping["stop"] = "Circle"
-    joystick_msg_layout = get_joystick_msg_layout("sony_dualshock4_ds4_driver")
-    remapping = apply_joystick_buttons_remapping(joystick_msg_layout, user_remapping)
+    joystick_configuration = get_joystick_configuration("sony_dualshock4_ds4_driver")
+    remapping = apply_joystick_buttons_remapping(joystick_configuration, user_remapping)
     assert remapping["start"] == 3
     assert remapping["stop"] == 2

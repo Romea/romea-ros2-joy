@@ -17,38 +17,39 @@ import yaml
 from ament_index_python.packages import get_package_share_directory
 
 
-def get_joystick_msg_layout_file_path(joystick_msg_layout):
+def get_joystick_configuration_file_path(config_filename):
     pkg_path = get_package_share_directory('romea_joystick_utils')
-    return f'{pkg_path}/config/joy_msg_layout/{joystick_msg_layout}.yaml'
+    return f'{pkg_path}/config/{config_filename}.yaml'
 
 
-def get_joystick_msg_layout(joystick_msg_layout):
-    with open(get_joystick_msg_layout_file_path(joystick_msg_layout)) as f:
+def get_joystick_configuration(config_filename):
+    with open(get_joystick_configuration_file_path(config_filename)) as f:
         return yaml.safe_load(f)
 
 
-def get_joystick_buttons_mapping(joystick_msg_layout):
-    return joystick_msg_layout["buttons"]["mapping"]
+def get_joystick_buttons_mapping(joystick_configuration):
+    return joystick_configuration["joy_msg_layout"]["buttons"]["mapping"]
 
 
-def get_joystick_axes_mapping(joystick_msg_layout):
+def get_joystick_axes_mapping(joystick_configuration):
 
     axes_mapping = {}
-    for axes_type in joystick_msg_layout["axes"].keys():
-        for mapping in joystick_msg_layout["axes"][axes_type]["mapping"].items():
+    axes = joystick_configuration["joy_msg_layout"]["axes"]
+    for axes_type in axes.keys():
+        for mapping in axes[axes_type]["mapping"].items():
             axes_mapping[mapping[0]] = mapping[1]
 
     return axes_mapping
 
 
-def apply_joystick_remapping(joystick_msg_layout, user_joystick_remapping):
+def apply_joystick_remapping(joystick_configuration, user_joystick_remapping):
 
     joystick_remapping = {}
     joystick_remapping["buttons"] = {}
     joystick_remapping["axes"] = {}
 
     try:
-        buttons_mapping = get_joystick_buttons_mapping(joystick_msg_layout)
+        buttons_mapping = get_joystick_buttons_mapping(joystick_configuration)
         for user_buttons_remapping in user_joystick_remapping["buttons"].items():
             id = buttons_mapping[user_buttons_remapping[1]]
             joystick_remapping["buttons"][user_buttons_remapping[0]] = id
@@ -60,7 +61,7 @@ def apply_joystick_remapping(joystick_msg_layout, user_joystick_remapping):
         )
 
     try:
-        axes_mapping = get_joystick_axes_mapping(joystick_msg_layout)
+        axes_mapping = get_joystick_axes_mapping(joystick_configuration)
         for user_axes_remapping in user_joystick_remapping["axes"].items():
             id = axes_mapping[user_axes_remapping[1]]
             joystick_remapping["axes"][user_axes_remapping[0]] = id
@@ -74,12 +75,12 @@ def apply_joystick_remapping(joystick_msg_layout, user_joystick_remapping):
     return joystick_remapping
 
 
-def apply_joystick_buttons_remapping(joystick_msg_layout, user_buttons_remapping):
+def apply_joystick_buttons_remapping(joystick_configuration, user_buttons_remapping):
 
     buttons_remapping = {}
 
     try:
-        buttons_mapping = get_joystick_buttons_mapping(joystick_msg_layout)
+        buttons_mapping = get_joystick_buttons_mapping(joystick_configuration)
         for user_buttons_remapping in user_buttons_remapping.items():
             id = buttons_mapping[user_buttons_remapping[1]]
             buttons_remapping[user_buttons_remapping[0]] = id
@@ -91,76 +92,3 @@ def apply_joystick_buttons_remapping(joystick_msg_layout, user_buttons_remapping
         )
 
     return buttons_remapping
-
-
-# def apply_joystick_remapping(
-#     joystick_manufacturer, joystick_model, joystick_driver, user_joystick_remapping
-# ):
-
-#     joystick_remapping = {}
-#     joystick_remapping["buttons"] = {}
-#     joystick_remapping["axes"] = {}
-
-#     joystick_configuration = get_joystick_configuration(
-#         joystick_manufacturer, joystick_model, joystick_driver
-#     )
-
-#     try:
-#         buttons_mapping = get_joystick_buttons_mapping(joystick_configuration)
-#         for user_buttons_remapping in user_joystick_remapping["buttons"].items():
-#             id = buttons_mapping[user_buttons_remapping[1]]
-#             joystick_remapping["buttons"][user_buttons_remapping[0]] = id
-#     except Exception:
-#         raise LookupError(
-#             "Cannot define remapping for button "
-#             + user_buttons_remapping[1]
-#             + " because this button is not defined in configuration file :"
-#             + get_joystick_configuration_file_path(
-#                 joystick_manufacturer, joystick_model, joystick_driver
-#             )
-#         )
-
-#     try:
-#         axes_mapping = get_joystick_axes_mapping(joystick_configuration)
-#         for user_axes_remapping in user_joystick_remapping["axes"].items():
-#             id = axes_mapping[user_axes_remapping[1]]
-#             joystick_remapping["axes"][user_axes_remapping[0]] = id
-#     except Exception:
-#         raise LookupError(
-#             "Cannot define remapping for axe "
-#             + user_axes_remapping[1]
-#             + " because this axe is not defined in configuration file :"
-#             + get_joystick_configuration_file_path(
-#                 joystick_manufacturer, joystick_model, joystick_driver
-#             )
-#         )
-
-#     return joystick_remapping
-
-
-# def apply_joystick_buttons_remapping(
-#     joystick_manufacturer, joystick_model, joystick_driver, user_buttons_remapping
-# ):
-
-#     buttons_remapping = {}
-
-#     joystick_configuration = get_joystick_configuration(
-#         joystick_manufacturer, joystick_model, joystick_driver
-#     )
-
-#     try:
-#         buttons_mapping = get_joystick_buttons_mapping(joystick_configuration)
-#         for user_buttons_remapping in user_buttons_remapping.items():
-#             id = buttons_mapping[user_buttons_remapping[1]]
-#             buttons_remapping[user_buttons_remapping[0]] = id
-#     except Exception:
-#         raise LookupError(
-#             "Cannot define remapping for button "
-#             + user_buttons_remapping[1]
-#             + " because this button is not defined in configuration file :"
-#             + get_joystick_configuration_file_path(
-#                 joystick_manufacturer, joystick_model, joystick_driver
-#             )
-#         )
-
-#     return buttons_remapping
