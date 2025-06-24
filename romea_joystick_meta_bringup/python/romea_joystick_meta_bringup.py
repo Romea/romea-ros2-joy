@@ -52,15 +52,15 @@ def generate_joystick_mapping_file(meta_description, user_remapping):
 
 def generate_launch_file(meta_description):
 
-    joystick_configuration = {
+    launch_arguments = [{"name": "mode", "default": "live"}]
+    namespaces = [meta_description.get_robot_name(), meta_description.get_name()]
+
+    configuration = {
         "frame_id": meta_description.get_link(),
         "joy_msg_layout":  meta_description.get_msg_layout(),
         "rate": meta_description.get_rate()
     }
 
     return LaunchFileGenerator("joystick").generate(
-        meta_description.get_launch_file(),
-        joystick_configuration,
-        meta_description.get_robot_name(),
-        meta_description.get_name(),
+        meta_description.get_launch_file(), launch_arguments, namespaces, configuration
     )

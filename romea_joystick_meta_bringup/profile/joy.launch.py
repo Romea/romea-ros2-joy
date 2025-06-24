@@ -31,12 +31,12 @@ def launch_setup(context, *args, **kwargs):
     if "replay" not in mode:
         launch.add_action(
             Node(
-                package="joy_linux",
-                executable="joy_linux_node",
+                package="joy",
+                executable="joy_node",
                 name="driver",
                 parameters=[
                     {
-                        "device_id": id,
+                        "device_id": int(id),
                         "autorepeat_rate": float(rate),
                         "deadzone": 0.05,
                         "coalesce_interval": 0.001,
@@ -50,12 +50,9 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
 
-    declared_arguments = []
-
-    declared_arguments = [
-        DeclareLaunchArgument("id"),
-    ]
-
     return LaunchDescription(
-        declared_arguments + [OpaqueFunction(function=launch_setup)]
+        [
+            DeclareLaunchArgument("id", default_value="0"),
+            OpaqueFunction(function=launch_setup)
+        ]
     )

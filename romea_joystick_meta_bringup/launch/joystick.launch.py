@@ -24,7 +24,7 @@ from launch.actions import (
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 
-from romea_joystick_meta_bringup import GPSMetaDescription, generate_launch_file
+from romea_joystick_meta_bringup import JoystickMetaDescription, generate_launch_file
 
 
 def get_mode(context):
@@ -38,7 +38,7 @@ def get_robot_namespace(context):
 
 def get_meta_description(context):
     meta_description_file_path = LaunchConfiguration("meta_description_file_path").perform(context)
-    return GPSMetaDescription(meta_description_file_path, get_robot_namespace(context))
+    return JoystickMetaDescription(meta_description_file_path, get_robot_namespace(context))
 
 
 def launch_setup(context, *args, **kwargs):
@@ -60,12 +60,11 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
 
-    declared_arguments = []
-
-    declared_arguments.append(DeclareLaunchArgument("meta_description_file_path"))
-
-    declared_arguments.append(DeclareLaunchArgument("robot_namespace", default_value=""))
-
-    declared_arguments.append(DeclareLaunchArgument("mode", default_value="live"))
-
-    return LaunchDescription(declared_arguments + [OpaqueFunction(function=launch_setup)])
+    return LaunchDescription(
+        [
+            DeclareLaunchArgument("meta_description_file_path"),
+            DeclareLaunchArgument("robot_namespace", default_value=""),
+            DeclareLaunchArgument("mode", default_value="live"),
+            OpaqueFunction(function=launch_setup)
+        ]
+    )

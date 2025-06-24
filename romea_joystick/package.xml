@@ -11,7 +11,7 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <exec_depend>romea_joystick_bringup</exec_depend>
+  <exec_depend>romea_joystick_meta_bringup</exec_depend>
   <exec_depend>romea_joystick_description</exec_depend>
   <exec_depend>romea_joystick_utils</exec_depend>
 

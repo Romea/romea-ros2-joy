@@ -50,12 +50,9 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
 
-    declared_arguments = []
-
-    declared_arguments = [
-        DeclareLaunchArgument("device"),
-    ]
-
     return LaunchDescription(
-        declared_arguments + [OpaqueFunction(function=launch_setup)]
+        [
+            DeclareLaunchArgument("device"),
+            OpaqueFunction(function=launch_setup)
+        ]
     )
