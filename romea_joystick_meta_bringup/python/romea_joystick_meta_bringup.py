@@ -30,23 +30,23 @@ class JoystickMetaDescription(SensorMetaDescription):
         )
 
 
-def load_meta_description(meta_description_file_path):
-    return JoystickMetaDescription(meta_description_file_path)
+def load_meta_description(meta_description_file_path,  robot_name=None):
+    return JoystickMetaDescription(meta_description_file_path, robot_name)
 
 
-def get_joystick_complete_configuration(meta_description):
-    return romea_joystick_utils.get_joystick_msg_layout(meta_description.get_msg_layout())
+def get_complete_configuration(meta_description):
+    return romea_joystick_utils.get_joystick_configuration(meta_description.get_msg_layout())
 
 
 def generate_buttons_mapping_file(meta_description, user_remapping):
     mapping = romea_joystick_utils.apply_joystick_buttons_remapping(
-        get_joystick_msg_layout(meta_description), user_remapping)
+        get_complete_configuration(meta_description), user_remapping)
     return yaml.dump(mapping, default_flow_style=False)
 
 
 def generate_joystick_mapping_file(meta_description, user_remapping):
     mapping = romea_joystick_utils.apply_joystick_remapping(
-        get_joystick_msg_layout(meta_description), user_remapping)
+        get_complete_configuration(meta_description), user_remapping)
     return yaml.dump(mapping, default_flow_style=False)
 
 
