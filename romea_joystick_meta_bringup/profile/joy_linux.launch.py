@@ -15,14 +15,13 @@
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, OpaqueFunction
-from launch_ros.actions import Node
 from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
 
 
 def launch_setup(context, *args, **kwargs):
 
     device = LaunchConfiguration("device").perform(context)
-
     mode = LaunchConfiguration("mode").perform(context)
     rate = LaunchConfiguration("rate").perform(context)
 

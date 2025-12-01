@@ -14,8 +14,8 @@
 
 
 import os
-import pytest
 
+import pytest
 from romea_joystick_meta_bringup import JoystickMetaDescription
 
 

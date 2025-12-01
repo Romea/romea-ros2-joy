@@ -13,8 +13,8 @@
 # limitations under the License.
 
 
-import yaml
 from ament_index_python.packages import get_package_share_directory
+import yaml
 
 
 def get_joystick_configuration_file_path(config_filename):
@@ -51,8 +51,8 @@ def apply_joystick_remapping(joystick_configuration, user_joystick_remapping):
     try:
         buttons_mapping = get_joystick_buttons_mapping(joystick_configuration)
         for user_buttons_remapping in user_joystick_remapping["buttons"].items():
-            id = buttons_mapping[user_buttons_remapping[1]]
-            joystick_remapping["buttons"][user_buttons_remapping[0]] = id
+            button_id = buttons_mapping[user_buttons_remapping[1]]
+            joystick_remapping["buttons"][user_buttons_remapping[0]] = button_id
     except Exception:
         raise LookupError(
             "Cannot define remapping for button "
@@ -63,8 +63,8 @@ def apply_joystick_remapping(joystick_configuration, user_joystick_remapping):
     try:
         axes_mapping = get_joystick_axes_mapping(joystick_configuration)
         for user_axes_remapping in user_joystick_remapping["axes"].items():
-            id = axes_mapping[user_axes_remapping[1]]
-            joystick_remapping["axes"][user_axes_remapping[0]] = id
+            axe_id = axes_mapping[user_axes_remapping[1]]
+            joystick_remapping["axes"][user_axes_remapping[0]] = axe_id
     except Exception:
         raise LookupError(
             "Cannot define remapping for axe "
@@ -82,8 +82,8 @@ def apply_joystick_buttons_remapping(joystick_configuration, user_buttons_remapp
     try:
         buttons_mapping = get_joystick_buttons_mapping(joystick_configuration)
         for user_buttons_remapping in user_buttons_remapping.items():
-            id = buttons_mapping[user_buttons_remapping[1]]
-            buttons_remapping[user_buttons_remapping[0]] = id
+            button_id = buttons_mapping[user_buttons_remapping[1]]
+            buttons_remapping[user_buttons_remapping[0]] = button_id
     except Exception:
         raise LookupError(
             "Cannot define remapping for button "

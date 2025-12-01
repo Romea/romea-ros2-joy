@@ -15,8 +15,9 @@
 # limitations under the License.
 
 import sys
+
+from romea_joystick_meta_bringup import generate_joystick_mapping_file, JoystickMetaDescription
 import yaml
-from romea_joystick_meta_bringup import JoystickMetaDescription, generate_joystick_mapping_file
 
 if __name__ == "__main__":
 

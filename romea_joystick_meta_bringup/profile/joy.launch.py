@@ -15,14 +15,13 @@
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, OpaqueFunction
-from launch_ros.actions import Node
 from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
 
 
 def launch_setup(context, *args, **kwargs):
 
-    id = LaunchConfiguration("id").perform(context)
-
+    device_id = LaunchConfiguration("id").perform(context)
     mode = LaunchConfiguration("mode").perform(context)
     rate = LaunchConfiguration("rate").perform(context)
 
@@ -36,7 +35,7 @@ def launch_setup(context, *args, **kwargs):
                 name="driver",
                 parameters=[
                     {
-                        "device_id": int(id),
+                        "device_id": int(device_id),
                         "autorepeat_rate": float(rate),
                         "deadzone": 0.05,
                         "coalesce_interval": 0.001,

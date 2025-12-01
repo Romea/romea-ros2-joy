@@ -14,11 +14,11 @@
 
 
 from romea_joystick_utils import (
-    get_joystick_configuration,
-    get_joystick_buttons_mapping,
-    get_joystick_axes_mapping,
+    apply_joystick_buttons_remapping,
     apply_joystick_remapping,
-    apply_joystick_buttons_remapping
+    get_joystick_axes_mapping,
+    get_joystick_buttons_mapping,
+    get_joystick_configuration,
 )
 
 

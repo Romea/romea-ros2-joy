@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-from romea_joystick_meta_bringup import JoystickMetaDescription, generate_launch_file
 import sys
+
+from romea_joystick_meta_bringup import generate_launch_file, JoystickMetaDescription
 
 if __name__ == "__main__":
 

@@ -14,9 +14,9 @@
 
 import os
 import subprocess
-import yaml
 
 from ament_index_python import get_package_prefix
+import yaml
 
 
 def test_buttons_mapping():
