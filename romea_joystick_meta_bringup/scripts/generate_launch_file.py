@@ -17,7 +17,7 @@
 import sys
 
 from romea_joystick_meta_bringup.meta_description import (
-    generate_launch_file, 
+    generate_launch_file,
     JoystickMetaDescription
 )
 
