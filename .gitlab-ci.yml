@@ -4,4 +4,4 @@ include:
 
 
 variables:
-  PKGS_TO_BUILD_TEST: "romea_joystick_utils romea_joystick_bringup romea_joystick_description"
+  PKGS_TO_BUILD_TEST: "romea_joystick_utils romea_joystick_meta_bringup"
