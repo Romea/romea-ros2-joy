@@ -1,17 +1,15 @@
 repositories:
   romea_core/romea_common:
     type: git
-    url: git@gitlab-ssh.irstea.fr:romea_core/romea_common.git
-    version: devel
+    url: git@forge.inrae.fr:romea_core/romea_common.git
 
   romea_ros2/tools/romea_common:
     type: git
-    url: git@gitlab-ssh.irstea.fr:romea_ros2/tools/romea_common.git
-    version: devel
+    url: git@forge.inrae.fr:romea_ros2/tools/romea_common.git
   romea_ros2/interfaces/teleoperation/romea_joy:
     type: git
-    url: git@gitlab-ssh.irstea.fr:romea_ros2/interfaces/teleoperation/romea_joy.git
-    version: devel
+    url: git@forge.inrae.fr:romea_ros2/interfaces/teleoperation/romea_joy.git
+    
   # romea_ros2/interfaces/teleoperation/pynput_teleop:
   #   type: git
   #   url: git@forgemia.inra.fr:tscf/ros2/pynput_teleop.git
