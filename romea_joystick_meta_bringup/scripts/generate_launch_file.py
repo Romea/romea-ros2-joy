@@ -16,7 +16,10 @@
 
 import sys
 
-from romea_joystick_meta_bringup import generate_launch_file, JoystickMetaDescription
+from romea_joystick_meta_bringup.meta_description import (
+    generate_launch_file, 
+    JoystickMetaDescription
+)
 
 if __name__ == "__main__":
 

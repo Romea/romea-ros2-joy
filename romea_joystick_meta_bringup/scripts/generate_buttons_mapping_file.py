@@ -16,7 +16,11 @@
 
 import sys
 
-from romea_joystick_meta_bringup import generate_buttons_mapping_file, JoystickMetaDescription
+from romea_joystick_meta_bringup.meta_description import (
+    generate_buttons_mapping_file,
+    JoystickMetaDescription
+)
+
 import yaml
 
 if __name__ == "__main__":
