@@ -16,7 +16,7 @@
 import os
 
 import pytest
-from romea_joystick_meta_bringup import JoystickMetaDescription
+from romea_joystick_meta_bringup.meta_description import JoystickMetaDescription
 
 
 @pytest.fixture(scope="module")
