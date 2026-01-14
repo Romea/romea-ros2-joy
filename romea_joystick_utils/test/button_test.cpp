@@ -26,7 +26,10 @@ public:
     msg(),
     pressed_counter(0),
     released_counter(0),
-    toggled_counter(0)
+    toggled_counter(0),
+    held_counter(0),
+    unheld_counter(0),
+    double_pressed_counter(0)
   {
   }
 
@@ -43,6 +46,21 @@ public:
   void toggled_callback()
   {
     toggled_counter++;
+  }
+
+  void held_callback()
+  {
+    held_counter++;
+  }
+
+  void unheld_callback()
+  {
+    unheld_counter++;
+  }
+
+  void double_pressed_callback()
+  {
+    double_pressed_counter++;
   }
 
 
@@ -62,6 +80,34 @@ public:
     button.registerCallback(
       romea::ros2::JoystickButton::TOGGLED,
       std::bind(&TestButton::toggled_callback, this));
+
+    button.registerCallback(
+      romea::ros2::JoystickButton::HELD,
+      std::bind(&TestButton::held_callback, this));
+
+    button.registerCallback(
+      romea::ros2::JoystickButton::UNHELD,
+      std::bind(&TestButton::unheld_callback, this));
+
+    button.registerCallback(
+      romea::ros2::JoystickButton::DOUBLE_PRESSED,
+      std::bind(&TestButton::double_pressed_callback, this));
+  }
+
+  void check_counters(
+    const int & expected_pressed_counter,
+    const int & expected_released_counter,
+    const int & expected_toggled_counter,
+    const int & expected_held_counter,
+    const int & expected_unheld_counter,
+    const int & expected_double_pressed_counter)
+  {
+    EXPECT_EQ(pressed_counter, expected_pressed_counter);
+    EXPECT_EQ(released_counter, expected_released_counter);
+    EXPECT_EQ(toggled_counter, expected_toggled_counter);
+    EXPECT_EQ(held_counter, expected_held_counter);
+    EXPECT_EQ(unheld_counter, expected_unheld_counter);
+    EXPECT_EQ(double_pressed_counter, expected_double_pressed_counter);
   }
 
   romea::ros2::JoystickButton button;
@@ -69,6 +115,9 @@ public:
   int pressed_counter;
   int released_counter;
   int toggled_counter;
+  int held_counter;
+  int unheld_counter;
+  int double_pressed_counter;
 };
 
 //-----------------------------------------------------------------------------
@@ -76,16 +125,12 @@ TEST_F(TestButton, testPressed)
 {
   msg.buttons[0] = 0;
   button.update(msg);
-  EXPECT_EQ(pressed_counter, 0);
-  EXPECT_EQ(released_counter, 0);
-  EXPECT_EQ(toggled_counter, 0);
+  check_counters(0, 0, 0, 0, 0, 0);
 
   msg.buttons[0] = 1;
+  msg.header.stamp.sec = 1;
   button.update(msg);
-
-  EXPECT_EQ(pressed_counter, 1);
-  EXPECT_EQ(released_counter, 0);
-  EXPECT_EQ(toggled_counter, 1);
+  check_counters(1, 0, 1, 0, 0, 0);
 }
 
 //-----------------------------------------------------------------------------
@@ -93,17 +138,61 @@ TEST_F(TestButton, testReleased)
 {
   msg.buttons[0] = 1;
   button.update(msg);
-  EXPECT_EQ(pressed_counter, 0);
-  EXPECT_EQ(released_counter, 0);
-  EXPECT_EQ(toggled_counter, 0);
+  check_counters(0, 0, 0, 0, 0, 0);
 
   msg.buttons[0] = 0;
   button.update(msg);
-
-  EXPECT_EQ(pressed_counter, 0);
-  EXPECT_EQ(released_counter, 1);
-  EXPECT_EQ(toggled_counter, 1);
+  check_counters(0, 1, 1, 0, 0, 0);
 }
+
+//-----------------------------------------------------------------------------
+TEST_F(TestButton, testHeldUnheld)
+{
+  msg.buttons[0] = 1;
+
+  for(size_t n = 1; n < 10; ++n) {
+    msg.header.stamp.sec++;
+    button.update(msg);
+    check_counters(0, 0, 0, 0, 0, 0);
+  }
+  msg.buttons[0] = 1;
+
+  for(size_t n = 1; n < 10; ++n) {
+    msg.header.stamp.sec++;
+    button.update(msg);
+    check_counters(0, 0, 0, 1, 0, 0);
+  }
+
+  msg.buttons[0] = 0;
+  msg.header.stamp.sec++;
+  button.update(msg);
+  check_counters(0, 1, 1, 1, 1, 0);
+}
+
+//-----------------------------------------------------------------------------
+TEST_F(TestButton, testDoublePress)
+{
+  msg.header.stamp.nanosec = 0;
+  msg.buttons[0] = 0;
+  button.update(msg);
+  check_counters(0, 0, 0, 0, 0, 0);
+
+  msg.header.stamp.nanosec = 300000000;
+  msg.buttons[0] = 1;
+  button.update(msg);
+  check_counters(1, 0, 1, 0, 0, 0);
+
+  msg.header.stamp.nanosec = 400000000;
+  msg.buttons[0] = 0;
+  button.update(msg);
+  check_counters(1, 1, 2, 0, 0, 0);
+
+  msg.header.stamp.nanosec = 500000000;
+  msg.buttons[0] = 1;
+  button.update(msg);
+  check_counters(2, 1, 3, 0, 0, 1);
+}
+
 
 //-----------------------------------------------------------------------------
 int main(int argc, char ** argv)

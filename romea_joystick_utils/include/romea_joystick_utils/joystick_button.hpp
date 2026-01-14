@@ -16,6 +16,7 @@
 #define ROMEA_JOYSTICK_UTILS__JOYSTICK_BUTTON_HPP_
 
 // std
+#include <chrono>
 #include <functional>
 #include <memory>
 
@@ -39,7 +40,10 @@ public:
   {
     PRESSED,
     RELEASED,
-    TOGGLED
+    TOGGLED,
+    HELD,
+    UNHELD,
+    DOUBLE_PRESSED
   };
 
 public:
@@ -57,9 +61,19 @@ private:
   int id_;
   int value_;
 
+  int hold_counter_;
+  int hold_threshold_;
+  bool was_held_;
+
+  int double_press_delay_ms_;
+  int previous_press_time_ms_;
+
   CallbackFunction pressed_callback_;
   CallbackFunction released_callback_;
   CallbackFunction toggled_callback_;
+  CallbackFunction held_callback_;
+  CallbackFunction unheld_callback_;
+  CallbackFunction double_pressed_callback_;
 };
 
 }  // namespace ros2
