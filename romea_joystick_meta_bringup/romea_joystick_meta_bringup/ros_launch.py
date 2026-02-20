@@ -14,6 +14,7 @@
 
 from launch.substitutions import LaunchConfiguration
 import romea_common_meta_bringup.ros_launch as common
+from romea_joystick_meta_bringup.meta_description import load_meta_description
 
 
 def declare_joystick_model(default_value=None):
@@ -21,7 +22,7 @@ def declare_joystick_model(default_value=None):
         {
             "name": "joystick_model",
             "description": "The model of the joystick",
-            "choices": ["chengong_hkj60ss", "microsoft_xbox", "pyinpu_teleop", "sony_dualshock4"]
+            "choices": ["chengong_hkj60ss", "microsoft_xbox", "pyinput_teleop", "sony_dualshock4"]
         },
         default_value
     )
@@ -57,3 +58,9 @@ def declare_joystick_topic(default_value=None):
 
 def get_joystick_topic(context):
     return LaunchConfiguration("joystick_topic").perform(context)
+
+
+def get_meta_description(context):
+    robot_namespace = common.get_robot_namespace(context)
+    meta_description_file_path = common.get_meta_description_file_path(context)
+    return load_meta_description(meta_description_file_path, robot_namespace)

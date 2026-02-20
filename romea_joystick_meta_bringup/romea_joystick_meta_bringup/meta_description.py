@@ -51,7 +51,7 @@ def generate_joystick_mapping_file(meta_description, user_remapping):
     return yaml.dump(mapping, default_flow_style=False)
 
 
-def generate_launch_file(meta_description):
+def generate_yaml_launch_file_str(meta_description):
 
     launch_arguments = [{"name": "mode", "default": "live"}]
     namespaces = [meta_description.get_robot_name(), meta_description.get_name()]
