@@ -150,14 +150,14 @@ TEST_F(TestButton, testHeldUnheld)
 {
   msg.buttons[0] = 1;
 
-  for(size_t n = 1; n < 10; ++n) {
+  for (size_t n = 1; n < 10; ++n) {
     msg.header.stamp.sec++;
     button.update(msg);
     check_counters(0, 0, 0, 0, 0, 0);
   }
   msg.buttons[0] = 1;
 
-  for(size_t n = 1; n < 10; ++n) {
+  for (size_t n = 1; n < 10; ++n) {
     msg.header.stamp.sec++;
     button.update(msg);
     check_counters(0, 0, 0, 1, 0, 0);
