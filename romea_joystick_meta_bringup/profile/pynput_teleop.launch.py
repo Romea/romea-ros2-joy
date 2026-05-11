@@ -14,6 +14,7 @@
 
 
 from launch import LaunchDescription
+
 # from launch.actions import DeclareLaunchArgument, OpaqueFunction
 from launch.actions import OpaqueFunction
 from launch.substitutions import LaunchConfiguration
@@ -38,9 +39,9 @@ def launch_setup(context, *args, **kwargs):
                     {
                         "up_down": {"is_incremental": True, "increment": 0.1, "value_max": 1.0},
                         "left_right": {"is_incremental": True, "increment": 0.1, "value_max": 1.0},
-                        "publish": {"rate": int(rate)}
+                        "publish": {"rate": int(rate)},
                     }
-                ]
+                ],
             )
         )
 
@@ -49,10 +50,4 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
 
-    return LaunchDescription(
-        [
-            OpaqueFunction(function=launch_setup)
-        ]
-    )
-
-# ros2 run pynput_teleop pynput_joy --display --ros-args --params-file $share_prefix/config/pynput_joy.yaml -r joy:=/joystick/joy
+    return LaunchDescription([OpaqueFunction(function=launch_setup)])

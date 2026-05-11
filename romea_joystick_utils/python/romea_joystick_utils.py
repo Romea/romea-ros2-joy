@@ -50,7 +50,7 @@ def apply_joystick_remapping(joystick_configuration, user_joystick_remapping):
 
     try:
         buttons_mapping = get_joystick_buttons_mapping(joystick_configuration)
-        user_buttons_remapping = user_joystick_remapping.get("buttons",{})
+        user_buttons_remapping = user_joystick_remapping.get("buttons", {})
         for user_button_remapping in user_buttons_remapping.items():
             button_id = buttons_mapping[user_button_remapping[1]]
             joystick_remapping["buttons"][user_button_remapping[0]] = button_id
@@ -63,7 +63,7 @@ def apply_joystick_remapping(joystick_configuration, user_joystick_remapping):
 
     try:
         axes_mapping = get_joystick_axes_mapping(joystick_configuration)
-        user_axes_remapping = user_joystick_remapping.get("axes",{})
+        user_axes_remapping = user_joystick_remapping.get("axes", {})
         for user_axe_remapping in user_axes_remapping.items():
             axe_id = axes_mapping[user_axe_remapping[1]]
             joystick_remapping["axes"][user_axe_remapping[0]] = axe_id
