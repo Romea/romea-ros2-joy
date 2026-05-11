@@ -50,25 +50,27 @@ def apply_joystick_remapping(joystick_configuration, user_joystick_remapping):
 
     try:
         buttons_mapping = get_joystick_buttons_mapping(joystick_configuration)
-        for user_buttons_remapping in user_joystick_remapping["buttons"].items():
-            button_id = buttons_mapping[user_buttons_remapping[1]]
-            joystick_remapping["buttons"][user_buttons_remapping[0]] = button_id
+        user_buttons_remapping = user_joystick_remapping.get("buttons",{})
+        for user_button_remapping in user_buttons_remapping.items():
+            button_id = buttons_mapping[user_button_remapping[1]]
+            joystick_remapping["buttons"][user_button_remapping[0]] = button_id
     except Exception:
         raise LookupError(
             "Cannot define remapping for button "
-            + user_buttons_remapping[1]
+            + user_button_remapping[1]
             + " because this button is not defined in joystick msg layout"
         )
 
     try:
         axes_mapping = get_joystick_axes_mapping(joystick_configuration)
-        for user_axes_remapping in user_joystick_remapping["axes"].items():
-            axe_id = axes_mapping[user_axes_remapping[1]]
-            joystick_remapping["axes"][user_axes_remapping[0]] = axe_id
+        user_axes_remapping = user_joystick_remapping.get("axes",{})
+        for user_axe_remapping in user_axes_remapping.items():
+            axe_id = axes_mapping[user_axe_remapping[1]]
+            joystick_remapping["axes"][user_axe_remapping[0]] = axe_id
     except Exception:
         raise LookupError(
             "Cannot define remapping for axe "
-            + user_axes_remapping[1]
+            + user_axe_remapping[1]
             + " because this axe is not defined in joystick msg layout"
         )
 

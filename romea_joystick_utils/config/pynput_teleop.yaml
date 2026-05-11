@@ -1,3 +1,4 @@
+type: any_keyboard
 buttons:
   mapping:
     key_w: 0
