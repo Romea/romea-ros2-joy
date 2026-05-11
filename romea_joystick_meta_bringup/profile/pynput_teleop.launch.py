@@ -32,7 +32,7 @@ def launch_setup(context, *args, **kwargs):
         launch.add_action(
             Node(
                 package="pynput_teleop",
-                executable="pynput_teleop.py",
+                executable="pynput_joy",
                 name="driver",
                 parameters=[
                     {
@@ -54,3 +54,5 @@ def generate_launch_description():
             OpaqueFunction(function=launch_setup)
         ]
     )
+
+# ros2 run pynput_teleop pynput_joy --display --ros-args --params-file $share_prefix/config/pynput_joy.yaml -r joy:=/joystick/joy
