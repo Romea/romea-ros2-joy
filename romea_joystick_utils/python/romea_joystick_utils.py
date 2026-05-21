@@ -18,8 +18,8 @@ import yaml
 
 
 def get_joystick_configuration_file_path(config_filename):
-    pkg_path = get_package_share_directory('romea_joystick_utils')
-    return f'{pkg_path}/config/{config_filename}.yaml'
+    pkg_path = get_package_share_directory("romea_joystick_utils")
+    return f"{pkg_path}/config/{config_filename}.yaml"
 
 
 def get_joystick_configuration(config_filename):

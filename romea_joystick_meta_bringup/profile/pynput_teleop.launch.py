@@ -35,6 +35,8 @@ def launch_setup(context, *args, **kwargs):
                 package="pynput_teleop",
                 executable="pynput_joy",
                 name="driver",
+                arguments=["--display", "--uinput-keyboard", "/dev/input/event22"],
+                # arguments=["--uinput-keyboard", "/dev/input/event3"],
                 parameters=[
                     {
                         "up_down": {"is_incremental": True, "increment": 0.1, "value_max": 1.0},
@@ -42,6 +44,7 @@ def launch_setup(context, *args, **kwargs):
                         "publish": {"rate": int(rate)},
                     }
                 ],
+                prefix=["gnome-terminal -- "],
             )
         )
 

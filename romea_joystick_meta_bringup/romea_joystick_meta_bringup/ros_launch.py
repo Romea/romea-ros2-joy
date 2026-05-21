@@ -22,9 +22,9 @@ def declare_joystick_model(default_value=None):
         {
             "name": "joystick_model",
             "description": "The model of the joystick",
-            "choices": ["chengong_hkj60ss", "microsoft_xbox", "pyinput_teleop", "sony_dualshock4"]
+            "choices": ["chengong_hkj60ss", "microsoft_xbox", "any_keyboard", "sony_dualshock4"],
         },
-        default_value
+        default_value,
     )
 
 
@@ -38,7 +38,7 @@ def declare_joystick_configuration_file_path(default_value=None):
             "name": "joystick_configuration_file_path",
             "description": "Path to the joystick configuration file.",
         },
-        default_value
+        default_value,
     )
 
 
@@ -52,7 +52,7 @@ def declare_joystick_topic(default_value=None):
             "name": "joystick_topic",
             "description": "The topic name for joystick messages.",
         },
-        default_value
+        default_value,
     )
 
 
