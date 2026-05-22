@@ -15,8 +15,7 @@
 
 from launch import LaunchDescription
 
-# from launch.actions import DeclareLaunchArgument, OpaqueFunction
-from launch.actions import OpaqueFunction
+from launch.actions import DeclareLaunchArgument, OpaqueFunction
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
@@ -25,6 +24,7 @@ def launch_setup(context, *args, **kwargs):
 
     mode = LaunchConfiguration("mode").perform(context)
     rate = LaunchConfiguration("rate").perform(context)
+    uinput_keyboard = LaunchConfiguration("uinput-keyboard").perform(context)
 
     launch = LaunchDescription()
 
@@ -35,8 +35,7 @@ def launch_setup(context, *args, **kwargs):
                 package="pynput_teleop",
                 executable="pynput_joy",
                 name="driver",
-                arguments=["--display", "--uinput-keyboard", "/dev/input/event22"],
-                # arguments=["--uinput-keyboard", "/dev/input/event3"],
+                arguments=["--display", "--uinput-keyboard", uinput_keyboard],
                 parameters=[
                     {
                         "up_down": {"is_incremental": True, "increment": 0.1, "value_max": 1.0},
@@ -53,4 +52,9 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
 
-    return LaunchDescription([OpaqueFunction(function=launch_setup)])
+    return LaunchDescription(
+        [
+            DeclareLaunchArgument("uinput-keyboard", default_value=""),
+            OpaqueFunction(function=launch_setup),
+        ]
+    )
