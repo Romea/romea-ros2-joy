@@ -41,16 +41,9 @@ public:
   {
   }
 
-  static void SetUpTestCase()
-  {
-    rclcpp::init(0, nullptr);
-  }
+  static void SetUpTestCase() { rclcpp::init(0, nullptr); }
 
-  static void TearDownTestCase()
-  {
-    rclcpp::shutdown();
-  }
-
+  static void TearDownTestCase() { rclcpp::shutdown(); }
 
   void SetUp()
   {
@@ -61,10 +54,7 @@ public:
     buttons_remapping["start"] = 0;
     buttons_remapping["stop"] = 1;
 
-    joy = std::make_unique<romea::ros2::Joystick>(
-      node,
-      axes_remapping,
-      buttons_remapping);
+    joy = std::make_unique<romea::ros2::Joystick>(node, axes_remapping, buttons_remapping);
 
     joy->registerButtonCallback(
       "start",
@@ -72,9 +62,7 @@ public:
       std::bind(&TestJoystick::start_callback, this));
 
     joy->registerButtonCallback(
-      "stop",
-      romea::ros2::JoystickButton::RELEASED,
-      std::bind(&TestJoystick::stop_callback, this));
+      "stop", romea::ros2::JoystickButton::RELEASED, std::bind(&TestJoystick::stop_callback, this));
 
     joy->registerOnReceivedMsgCallback(
       std::bind(&TestJoystick::joystick_callback, this, std::placeholders::_1));
@@ -98,15 +86,9 @@ public:
     stop_button_value = joy.getButtonValue("stop");
   }
 
-  void start_callback()
-  {
-    start = true;
-  }
+  void start_callback() { start = true; }
 
-  void stop_callback()
-  {
-    stop = true;
-  }
+  void stop_callback() { stop = true; }
 
   std::shared_ptr<rclcpp::Node> node;
   std::unique_ptr<romea::ros2::Joystick> joy;

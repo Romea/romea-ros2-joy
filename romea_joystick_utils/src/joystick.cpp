@@ -21,7 +21,6 @@
 // local
 #include "romea_joystick_utils/joystick.hpp"
 
-
 namespace romea
 {
 namespace ros2
@@ -47,12 +46,8 @@ void Joystick::init_joy_sub_<rclcpp_lifecycle::LifecycleNode>(
 //-----------------------------------------------------------------------------
 template<>
 Joystick::Joystick<rclcpp::Node>(
-  std::shared_ptr<rclcpp::Node> node,
-  const std::map<std::string, int> & buttons_mapping)
-: joy_sub_(),
-  axes_(),
-  buttons_(),
-  on_received_msg_callback_()
+  std::shared_ptr<rclcpp::Node> node, const std::map<std::string, int> & buttons_mapping)
+: joy_sub_(), axes_(), buttons_(), on_received_msg_callback_()
 {
   init_buttons(buttons_mapping);
   init_joy_sub_(node);
@@ -63,10 +58,7 @@ template<>
 Joystick::Joystick<rclcpp_lifecycle::LifecycleNode>(
   std::shared_ptr<rclcpp_lifecycle::LifecycleNode> node,
   const std::map<std::string, int> & buttons_mapping)
-: joy_sub_(),
-  axes_(),
-  buttons_(),
-  on_received_msg_callback_()
+: joy_sub_(), axes_(), buttons_(), on_received_msg_callback_()
 {
   init_buttons(buttons_mapping);
   init_joy_sub_(node);
@@ -78,10 +70,7 @@ Joystick::Joystick<rclcpp::Node>(
   std::shared_ptr<rclcpp::Node> node,
   const std::map<std::string, int> & axes_mapping,
   const std::map<std::string, int> & buttons_mapping)
-: joy_sub_(),
-  axes_(),
-  buttons_(),
-  on_received_msg_callback_()
+: joy_sub_(), axes_(), buttons_(), on_received_msg_callback_()
 {
   init_axes(axes_mapping);
   init_buttons(buttons_mapping);
@@ -94,16 +83,12 @@ Joystick::Joystick<rclcpp_lifecycle::LifecycleNode>(
   std::shared_ptr<rclcpp_lifecycle::LifecycleNode> node,
   const std::map<std::string, int> & axes_mapping,
   const std::map<std::string, int> & buttons_mapping)
-: joy_sub_(),
-  axes_(),
-  buttons_(),
-  on_received_msg_callback_()
+: joy_sub_(), axes_(), buttons_(), on_received_msg_callback_()
 {
   init_axes(axes_mapping);
   init_buttons(buttons_mapping);
   init_joy_sub_(node);
 }
-
 
 //-----------------------------------------------------------------------------
 void Joystick::init_axes(const std::map<std::string, int> & axes_mapping)
@@ -170,19 +155,19 @@ void Joystick::registerOnReceivedMsgCallback(OnReceivedMsgCallback && callback)
 }
 
 //-----------------------------------------------------------------------------
-const int & Joystick::getButtonValue(const std::string & button_name)const
+const int & Joystick::getButtonValue(const std::string & button_name) const
 {
   return buttons_.at(button_name)->getValue();
 }
 
 //-----------------------------------------------------------------------------
-const double & Joystick::getAxeValue(const std::string & axe_name)const
+const double & Joystick::getAxeValue(const std::string & axe_name) const
 {
   return axes_.at(axe_name)->getValue();
 }
 
 //-----------------------------------------------------------------------------
-std::map<std::string, int> Joystick::get_mapping()const
+std::map<std::string, int> Joystick::get_mapping() const
 {
   std::map<std::string, int> mapping;
   for (const auto & [axe_id, axe] : axes_) {

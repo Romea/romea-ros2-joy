@@ -23,7 +23,6 @@
 // ros
 #include "sensor_msgs/msg/joy.hpp"
 
-
 namespace romea
 {
 namespace ros2
@@ -32,7 +31,7 @@ namespace ros2
 class JoystickButton
 {
 public:
-  using CallbackFunction = std::function<void (void)>;
+  using CallbackFunction = std::function<void(void)>;
 
   using Ptr = std::unique_ptr<JoystickButton>;
 
@@ -53,9 +52,9 @@ public:
 
   void registerCallback(Event event, CallbackFunction && function);
 
-  const int & getValue()const;
+  const int & getValue() const;
 
-  const int & getId()const;
+  const int & getId() const;
 
 private:
   int id_;

@@ -26,7 +26,7 @@ Available configurations include:
 * `sony_dualshock4.yaml`
 * `sony_dualshock4_ds4_driver.yaml`
 * `chengong_hj60ss.yaml`
-* `pynput_teleop.yaml`
+* `any_keyboard.yaml`
 
 These configuration files describe the layout of the `sensor_msgs/msg/Joy` message for each device, including:
 

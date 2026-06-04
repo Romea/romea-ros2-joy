@@ -79,7 +79,6 @@ void JoystickButton::registerCallback(Event event, CallbackFunction && function)
   }
 }
 
-
 //-----------------------------------------------------------------------------
 void JoystickButton::update(const sensor_msgs::msg::Joy & joy_msg)
 {
@@ -126,17 +125,16 @@ void JoystickButton::update(const sensor_msgs::msg::Joy & joy_msg)
 }
 
 //-----------------------------------------------------------------------------
-const int & JoystickButton::getValue()const
+const int & JoystickButton::getValue() const
 {
   return value_;
 }
 
 //-----------------------------------------------------------------------------
-const int & JoystickButton::getId()const
+const int & JoystickButton::getId() const
 {
   return id_;
 }
-
 
 }  // namespace ros2
 }  // namespace romea

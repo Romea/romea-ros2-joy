@@ -33,36 +33,17 @@ public:
   {
   }
 
-  void pressed_callback()
-  {
-    pressed_counter++;
-  }
+  void pressed_callback() { pressed_counter++; }
 
-  void released_callback()
-  {
-    released_counter++;
-  }
+  void released_callback() { released_counter++; }
 
-  void toggled_callback()
-  {
-    toggled_counter++;
-  }
+  void toggled_callback() { toggled_counter++; }
 
-  void held_callback()
-  {
-    held_counter++;
-  }
+  void held_callback() { held_counter++; }
 
-  void unheld_callback()
-  {
-    unheld_counter++;
-  }
+  void unheld_callback() { unheld_counter++; }
 
-  void double_pressed_callback()
-  {
-    double_pressed_counter++;
-  }
-
+  void double_pressed_callback() { double_pressed_counter++; }
 
   void SetUp()
   {
@@ -70,24 +51,19 @@ public:
     msg.buttons.resize(11);
 
     button.registerCallback(
-      romea::ros2::JoystickButton::PRESSED,
-      std::bind(&TestButton::pressed_callback, this));
+      romea::ros2::JoystickButton::PRESSED, std::bind(&TestButton::pressed_callback, this));
 
     button.registerCallback(
-      romea::ros2::JoystickButton::RELEASED,
-      std::bind(&TestButton::released_callback, this));
+      romea::ros2::JoystickButton::RELEASED, std::bind(&TestButton::released_callback, this));
 
     button.registerCallback(
-      romea::ros2::JoystickButton::TOGGLED,
-      std::bind(&TestButton::toggled_callback, this));
+      romea::ros2::JoystickButton::TOGGLED, std::bind(&TestButton::toggled_callback, this));
 
     button.registerCallback(
-      romea::ros2::JoystickButton::HELD,
-      std::bind(&TestButton::held_callback, this));
+      romea::ros2::JoystickButton::HELD, std::bind(&TestButton::held_callback, this));
 
     button.registerCallback(
-      romea::ros2::JoystickButton::UNHELD,
-      std::bind(&TestButton::unheld_callback, this));
+      romea::ros2::JoystickButton::UNHELD, std::bind(&TestButton::unheld_callback, this));
 
     button.registerCallback(
       romea::ros2::JoystickButton::DOUBLE_PRESSED,
@@ -192,7 +168,6 @@ TEST_F(TestButton, testDoublePress)
   button.update(msg);
   check_counters(2, 1, 3, 0, 0, 1);
 }
-
 
 //-----------------------------------------------------------------------------
 int main(int argc, char ** argv)

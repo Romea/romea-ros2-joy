@@ -20,9 +20,7 @@ namespace ros2
 {
 
 //-----------------------------------------------------------------------------
-JoystickAxe::JoystickAxe(const int & axis_id)
-: id_(axis_id),
-  value_(0)
+JoystickAxe::JoystickAxe(const int & axis_id) : id_(axis_id), value_(0)
 {
 }
 
@@ -33,13 +31,13 @@ void JoystickAxe::update(const sensor_msgs::msg::Joy & joy_msg)
 }
 
 //-----------------------------------------------------------------------------
-const double & JoystickAxe::getValue()const
+const double & JoystickAxe::getValue() const
 {
   return value_;
 }
 
 //-----------------------------------------------------------------------------
-const int & JoystickAxe::getId()const
+const int & JoystickAxe::getId() const
 {
   return id_;
 }

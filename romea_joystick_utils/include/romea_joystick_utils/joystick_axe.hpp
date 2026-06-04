@@ -24,7 +24,6 @@
 // romea core
 #include "romea_core_common/math/Interval.hpp"
 
-
 namespace romea
 {
 namespace ros2
@@ -40,9 +39,9 @@ public:
 
   virtual void update(const sensor_msgs::msg::Joy & joy_msg);
 
-  const int & getId()const;
+  const int & getId() const;
 
-  const double & getValue()const;
+  const double & getValue() const;
 
 protected:
   int id_;

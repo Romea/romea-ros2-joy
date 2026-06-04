@@ -17,10 +17,9 @@
 
 // std
 #include <functional>
+#include <map>
 #include <memory>
 #include <string>
-#include <map>
-
 
 // ros
 #include "rclcpp/node.hpp"
@@ -31,25 +30,23 @@
 #include "romea_common_utils/params/node_parameters.hpp"
 
 // local
-#include "romea_joystick_utils/joystick_button.hpp"
 #include "romea_joystick_utils/joystick_axe.hpp"
+#include "romea_joystick_utils/joystick_button.hpp"
 
-namespace  romea
+namespace romea
 {
-namespace  ros2
+namespace ros2
 {
 
 class Joystick
 {
 public:
-  using OnReceivedMsgCallback = std::function<void (const Joystick &)>;
+  using OnReceivedMsgCallback = std::function<void(const Joystick &)>;
   using Remappings = std::map<std::string, std::string>;
 
 public:
   template<typename Node>
-  Joystick(
-    std::shared_ptr<Node> node,
-    const std::map<std::string, int> & buttons_mapping);
+  Joystick(std::shared_ptr<Node> node, const std::map<std::string, int> & buttons_mapping);
 
   template<typename Node>
   Joystick(
@@ -64,11 +61,11 @@ public:
     const JoystickButton::Event & event_type,
     JoystickButton::CallbackFunction && callback);
 
-  const int & getButtonValue(const std::string & button_name)const;
+  const int & getButtonValue(const std::string & button_name) const;
 
-  const double & getAxeValue(const std::string & axe_name)const;
+  const double & getAxeValue(const std::string & axe_name) const;
 
-  std::map<std::string, int> get_mapping()const;
+  std::map<std::string, int> get_mapping() const;
 
 private:
   template<typename Node>
