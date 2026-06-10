@@ -43,7 +43,7 @@ def launch_setup(context, *args, **kwargs):
                         "publish": {"rate": int(rate)},
                     }
                 ],
-                prefix=["gnome-terminal -- "],
+                prefix=["xterm -e"],
             )
         )
 
