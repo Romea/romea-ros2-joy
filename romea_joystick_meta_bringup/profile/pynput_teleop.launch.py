@@ -26,6 +26,10 @@ def launch_setup(context, *args, **kwargs):
     rate = LaunchConfiguration("rate").perform(context)
     uinput_keyboard = LaunchConfiguration("uinput-keyboard").perform(context)
 
+    arg_keyboard = []
+    if uinput_keyboard:
+        arg_keyboard = ["--uinput-keyboard", uinput_keyboard]
+
     launch = LaunchDescription()
 
     if "replay" not in mode:
@@ -35,7 +39,7 @@ def launch_setup(context, *args, **kwargs):
                 package="pynput_teleop",
                 executable="pynput_joy",
                 name="driver",
-                arguments=["--display", "--uinput-keyboard", uinput_keyboard],
+                arguments=["--display"] + arg_keyboard,
                 parameters=[
                     {
                         "up_down": {"is_incremental": True, "increment": 0.1, "value_max": 1.0},
