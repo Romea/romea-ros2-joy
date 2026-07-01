@@ -27,22 +27,21 @@ def launch_setup(context, *args, **kwargs):
 
     launch = LaunchDescription()
 
-    if "replay" not in mode:
-        launch.add_action(
-            Node(
-                package="joy",
-                executable="joy_node",
-                name="driver",
-                parameters=[
-                    {
-                        "device_id": int(device_id),
-                        "autorepeat_rate": float(rate),
-                        "deadzone": 0.05,
-                        "coalesce_interval": 0.001,
-                    },
-                ]
-            )
+    launch.add_action(
+        Node(
+            package="joy",
+            executable="joy_node",
+            name="driver",
+            parameters=[
+                {
+                    "device_id": int(device_id),
+                    "autorepeat_rate": float(rate),
+                    "deadzone": 0.05,
+                    "coalesce_interval": 0.001,
+                },
+            ]
         )
+    )
 
     return [launch]
 
