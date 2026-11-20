@@ -19,6 +19,7 @@ import yaml
 
 
 class JoystickMetaDescription(SensorMetaDescription):
+
     def __init__(self, meta_description_file_path, robot_name=None):
         super().__init__("joystick", meta_description_file_path, robot_name)
 

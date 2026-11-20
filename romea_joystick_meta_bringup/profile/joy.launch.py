@@ -22,7 +22,7 @@ from launch_ros.actions import Node
 def launch_setup(context, *args, **kwargs):
 
     device_id = LaunchConfiguration("id").perform(context)
-    mode = LaunchConfiguration("mode").perform(context)
+    # mode = LaunchConfiguration("mode").perform(context)
     rate = LaunchConfiguration("rate").perform(context)
 
     launch = LaunchDescription()
