@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(romea_joystick_utils)
 
 # Default to C99
@@ -17,41 +17,44 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
 find_package(romea_core_common REQUIRED)
 find_package(romea_common_utils REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
       src/joystick.cpp
       src/joystick_axe.cpp
       src/joystick_button.cpp)
 
-ament_target_dependencies(${PROJECT_NAME}
-    rclcpp
-    rclcpp_lifecycle
-    romea_core_common
-    romea_common_utils
-    sensor_msgs)
+target_link_libraries(${PROJECT_NAME} PUBLIC
+    rclcpp::rclcpp
+    rclcpp_lifecycle::rclcpp_lifecycle
+    romea_core_common::romea_core_common
+    romea_common_utils::romea_common_utils
+    ${sensor_msgs_TARGETS}
+    yaml-cpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>)
 
-target_link_libraries(${PROJECT_NAME} ${YAML_CPP_LIBRARIES})
-
-ament_export_include_directories(include)
+#ament_export_include_directories(include)
 ament_export_dependencies(romea_core_common)
 ament_export_dependencies(romea_common_utils)
 ament_export_dependencies(sensor_msgs)
-ament_export_libraries(${PROJECT_NAME})
-#ament_export_targets(${PROJECT_NAME})
+#ament_export_libraries(${PROJECT_NAME})
+ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
+ament_export_dependencies(rclcpp rclcpp_lifecycle yaml-cpp)
 
 #install(TARGETS ${PROJECT_NAME}_node DESTINATION lib/${PROJECT_NAME})
 
 install(
 TARGETS ${PROJECT_NAME}
+  EXPORT export_${PROJECT_NAME}
   DESTINATION lib
 )
 
